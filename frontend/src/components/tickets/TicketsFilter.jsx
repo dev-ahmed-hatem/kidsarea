@@ -195,7 +195,7 @@ const TicketsFilter = () => {
                                                         <span className="text-primary font-bold">
                                                             {day}
                                                         </span>
-                                                        <span className="mx-6">
+                                                        <span className="block lg:mx-6 lg:inline-block">
                                                             عدد التذاكر:{" "}
                                                             <span className="text-primary font-bold">
                                                                 {
@@ -203,7 +203,7 @@ const TicketsFilter = () => {
                                                                 }
                                                             </span>
                                                         </span>
-                                                        <span className="mx-6">
+                                                        <span className="block lg:mx-6 lg:inline-block">
                                                             إجمالى السعر :{" "}
                                                             <span className="text-primary font-bold">
                                                                 {
