@@ -6,9 +6,16 @@ const PermissionContext = createContext();
 
 const PermissionProvider = ({ permissions_list, children }) => {
     //////////////////////////////// handle permissions ////////////////////////////////
-    const is_superuser = JSON.parse(localStorage.getItem("auth_user"))[
-        "is_superuser"
-    ];
+    let is_superuser = false;
+    try {
+        is_superuser =
+            JSON.parse(localStorage.getItem("auth_user"))?.is_superuser ||
+            false;
+    } catch (error) {
+        console.error("Error parsing auth_user from localStorage:", error);
+        is_superuser = false;
+    }
+
     const [forbidden, setForbidden] = useState(false);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState(false);
@@ -22,7 +29,7 @@ const PermissionProvider = ({ permissions_list, children }) => {
             setForbidden: setForbidden,
             setPermissions: setPermissions,
         });
-    }, []);
+    }, [permissions_list]);
 
     const has_permission = (model_name, perm) => {
         if (is_superuser) return true;
