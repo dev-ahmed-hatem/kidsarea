@@ -8,10 +8,11 @@ import theme from "./assets/FlowbiteTheme.jsx";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
-        <Flowbite theme={{ theme: theme }}>
+        <div className="font-bold text-center text-3xl">Test Content</div>
+        {/* <Flowbite theme={{ theme: theme }}>
             <RouterProvider
                 router={createBrowserRouter(browserRoutes)}
             ></RouterProvider>
-        </Flowbite>
+        </Flowbite> */}
     </StrictMode>
 );
