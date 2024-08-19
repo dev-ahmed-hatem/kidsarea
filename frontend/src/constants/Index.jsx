@@ -1,16 +1,15 @@
 import {
-    //     FaUsers,
-    //     FaCog,
-    //     FaMoneyBill,
-    //     FaUserTie,
+    FaUsers,
+    FaCog,
+    FaMoneyBill,
+    FaUserTie,
     FaTicketAlt,
 } from "react-icons/fa";
-// import Managers from "../components/users/managers/Managers";
-// import { BiSolidCategory } from "react-icons/bi";
+import Managers from "../components/users/managers/Managers";
+import { BiSolidCategory } from "react-icons/bi";
 import Ticket from "../components/tickets/Ticket";
-// import PermissionProvider from "../providers/PermissionProvider";
 import TicketsFilter from "../components/tickets/TicketsFilter";
-// import Games from "../components/settings/games/Games";
+import Games from "../components/settings/games/Games";
 import { SlCalender } from "react-icons/sl";
 
 export const routes = [
@@ -19,22 +18,15 @@ export const routes = [
         title: "إدارة طاقم العمل",
         name: "user-management",
         url: "/users",
-        // icon: <FaUsers />,
+        icon: <FaUsers />,
         children: [
             {
                 id: 1,
                 title: "المديرين",
                 name: "managers",
                 url: "/users/managers",
-                // icon: <FaUserTie />,
-                // element: (
-                //     <PermissionProvider
-                //         key={"managers"}
-                //         permissions_list={["users.user"]}
-                //     >
-                //         <Managers />
-                //     </PermissionProvider>
-                // ),
+                icon: <FaUserTie />,
+                element: <Managers />,
                 permissions: "unadjustable",
             },
             // {
@@ -85,21 +77,14 @@ export const routes = [
         title: "إعدادات النظام",
         name: "system-settings",
         url: "/settings",
-        // icon: <FaCog />,
+        icon: <FaCog />,
         children: [
             {
                 id: 1,
                 title: "الألعاب",
                 url: "/settings/games",
-                // icon: <BiSolidCategory />,
-                // element: (
-                //     <PermissionProvider
-                //         key={"games"}
-                //         permissions_list={["games.game"]}
-                //     >
-                //         <Games />,
-                //     </PermissionProvider>
-                // ),
+                icon: <BiSolidCategory />,
+                element: <Games />,
             },
         ],
     },
@@ -108,7 +93,7 @@ export const routes = [
         title: "التذاكر",
         name: "tickets",
         url: "/tickets",
-        // icon: <FaMoneyBill />,
+        icon: <FaMoneyBill />,
         children: [
             {
                 id: 1,

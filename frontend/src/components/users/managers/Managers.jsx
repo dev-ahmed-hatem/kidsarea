@@ -9,17 +9,11 @@ import endpoints from "../../../config/config";
 import ManagersForm from "./ManagersForm";
 import { fetch_list_data } from "../../../config/actions";
 import ConfirmDelete from "../../groups/ConfirmDelete";
-import ErrorGroup from "../../groups/ErrorGroup";
-import { usePermission } from "../../../providers/PermissionProvider";
 import { useDrawer } from "../../../providers/DrawerProvider";
 
 const Managers = () => {
     //////////////////////////////// providers ////////////////////////////////
     const { showDrawer, closeDrawer } = useDrawer();
-    const { has_permission } = usePermission();
-
-    //////////////////////////////// permissions ////////////////////////////////
-    const [app_label, model_name, perm_name] = ["users", "user", "manager"];
 
     //////////////////////////////// list data ////////////////////////////////
     const [data, setData] = useState([]);
@@ -82,168 +76,145 @@ const Managers = () => {
     };
 
     useEffect(() => {
-        if (has_permission(`${app_label}.${model_name}`, `view_${perm_name}`)) {
-            get_current_managers();
-        }
+        get_current_managers();
     }, [searchParam, pageNumber]);
 
     return (
         <>
             {/* add form */}
-            {has_permission(
-                `${app_label}.${model_name}`,
-                `add_${perm_name}`
-            ) ? (
-                <ManagersForm
-                    postURL={endpoints.manager_list}
-                    callBack={get_current_managers}
-                />
-            ) : (
-                <ErrorGroup title={"إضافة مدير"} message={"ليس لديك صلاحية"} />
-            )}
+            <ManagersForm
+                postURL={endpoints.manager_list}
+                callBack={get_current_managers}
+            />
 
             {/* table data */}
-            {has_permission(
-                `${app_label}.${model_name}`,
-                `view_${perm_name}`
-            ) ? (
-                <ViewGroup title={"المديرين الحاليين"}>
-                    {loading ? (
-                        <Loading />
-                    ) : fetchError ? (
-                        <p className="text-lg text-center text-red-600 py-4">
-                            خطأ في تحميل البيانات
-                        </p>
-                    ) : (
-                        <>
-                            <TableGroup
-                                onChange={(event) => {
-                                    setSearchParam(event.target.value);
-                                    setPageNumber(1);
-                                }}
-                            >
-                                {data.count == 0 ? (
+            <ViewGroup title={"المديرين الحاليين"}>
+                {loading ? (
+                    <Loading />
+                ) : fetchError ? (
+                    <p className="text-lg text-center text-red-600 py-4">
+                        خطأ في تحميل البيانات
+                    </p>
+                ) : (
+                    <>
+                        <TableGroup
+                            onChange={(event) => {
+                                setSearchParam(event.target.value);
+                                setPageNumber(1);
+                            }}
+                        >
+                            {data.count == 0 ? (
+                                <Table.Body>
+                                    <Table.Row className="text-lg text-center text-gray-800 py-3 font-bold bg-red-500">
+                                        <Table.Cell>لا توجد بيانات</Table.Cell>
+                                    </Table.Row>
+                                </Table.Body>
+                            ) : (
+                                <>
+                                    <Table.Head>
+                                        <Table.HeadCell>
+                                            اسم المدير
+                                        </Table.HeadCell>
+                                        <Table.HeadCell>
+                                            اسم المستخدم
+                                        </Table.HeadCell>
+                                        <Table.HeadCell>
+                                            رقم الهوية
+                                        </Table.HeadCell>
+                                        <Table.HeadCell>
+                                            رقم الهاتف
+                                        </Table.HeadCell>
+                                        <Table.HeadCell>إجراءات</Table.HeadCell>
+                                    </Table.Head>
                                     <Table.Body>
-                                        <Table.Row className="text-lg text-center text-gray-800 py-3 font-bold bg-red-500">
-                                            <Table.Cell>
-                                                لا توجد بيانات
-                                            </Table.Cell>
-                                        </Table.Row>
-                                    </Table.Body>
-                                ) : (
-                                    <>
-                                        <Table.Head>
-                                            <Table.HeadCell>
-                                                اسم المدير
-                                            </Table.HeadCell>
-                                            <Table.HeadCell>
-                                                اسم المستخدم
-                                            </Table.HeadCell>
-                                            <Table.HeadCell>
-                                                رقم الهوية
-                                            </Table.HeadCell>
-                                            <Table.HeadCell>
-                                                رقم الهاتف
-                                            </Table.HeadCell>
-                                            <Table.HeadCell>
-                                                إجراءات
-                                            </Table.HeadCell>
-                                        </Table.Head>
-                                        <Table.Body>
-                                            {data.results.map((user) => {
-                                                return (
-                                                    <Table.Row
-                                                        key={user.id}
-                                                        className="bg-white font-medium text-gray-900"
-                                                    >
-                                                        <Table.Cell>
-                                                            {user.name ? (
-                                                                user.name
-                                                            ) : (
-                                                                <span className="text-red-600">
-                                                                    غير مسجل
-                                                                </span>
-                                                            )}
-                                                        </Table.Cell>
-                                                        <Table.Cell>
-                                                            {user.username ? (
-                                                                user.username
-                                                            ) : (
-                                                                <span className="text-red-600">
-                                                                    غير مسجل
-                                                                </span>
-                                                            )}
-                                                        </Table.Cell>
-                                                        <Table.Cell>
-                                                            {user.national_id ? (
-                                                                user.national_id
-                                                            ) : (
-                                                                <span className="text-red-600">
-                                                                    غير مسجل
-                                                                </span>
-                                                            )}
-                                                        </Table.Cell>
-                                                        <Table.Cell>
-                                                            {user.phone ? (
-                                                                user.phone
-                                                            ) : (
-                                                                <span className="text-red-600">
-                                                                    غير مسجل
-                                                                </span>
-                                                            )}
-                                                        </Table.Cell>
-                                                        <Table.Cell>
-                                                            <span className="flex text-xl gap-x-3">
-                                                                {(current_user.id ==
-                                                                    user.id ||
-                                                                    current_user.is_root) && (
-                                                                    <MdEdit
-                                                                        className="text-accent cursor-pointer"
-                                                                        onClick={() => {
-                                                                            handleDrawer(
-                                                                                "edit",
-                                                                                user
-                                                                            );
-                                                                        }}
-                                                                    />
-                                                                )}
-                                                                {current_user.is_root && (
-                                                                    <MdDelete
-                                                                        className="text-secondary cursor-pointer"
-                                                                        onClick={() => {
-                                                                            handleDrawer(
-                                                                                "delete",
-                                                                                user
-                                                                            );
-                                                                        }}
-                                                                    />
-                                                                )}
+                                        {data.results.map((user) => {
+                                            return (
+                                                <Table.Row
+                                                    key={user.id}
+                                                    className="bg-white font-medium text-gray-900"
+                                                >
+                                                    <Table.Cell>
+                                                        {user.name ? (
+                                                            user.name
+                                                        ) : (
+                                                            <span className="text-red-600">
+                                                                غير مسجل
                                                             </span>
-                                                        </Table.Cell>
-                                                    </Table.Row>
-                                                );
-                                            })}
-                                        </Table.Body>
-                                    </>
-                                )}
-                            </TableGroup>
-
-                            {data.total_pages > 1 && (
-                                <TablePagination
-                                    totalPages={data.total_pages}
-                                    currentPage={data.current_page}
-                                    onPageChange={(page) => setPageNumber(page)}
-                                />
+                                                        )}
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        {user.username ? (
+                                                            user.username
+                                                        ) : (
+                                                            <span className="text-red-600">
+                                                                غير مسجل
+                                                            </span>
+                                                        )}
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        {user.national_id ? (
+                                                            user.national_id
+                                                        ) : (
+                                                            <span className="text-red-600">
+                                                                غير مسجل
+                                                            </span>
+                                                        )}
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        {user.phone ? (
+                                                            user.phone
+                                                        ) : (
+                                                            <span className="text-red-600">
+                                                                غير مسجل
+                                                            </span>
+                                                        )}
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        <span className="flex text-xl gap-x-3">
+                                                            {(current_user.id ==
+                                                                user.id ||
+                                                                current_user.is_root) && (
+                                                                <MdEdit
+                                                                    className="text-accent cursor-pointer"
+                                                                    onClick={() => {
+                                                                        handleDrawer(
+                                                                            "edit",
+                                                                            user
+                                                                        );
+                                                                    }}
+                                                                />
+                                                            )}
+                                                            {current_user.is_root && (
+                                                                <MdDelete
+                                                                    className="text-secondary cursor-pointer"
+                                                                    onClick={() => {
+                                                                        handleDrawer(
+                                                                            "delete",
+                                                                            user
+                                                                        );
+                                                                    }}
+                                                                />
+                                                            )}
+                                                        </span>
+                                                    </Table.Cell>
+                                                </Table.Row>
+                                            );
+                                        })}
+                                    </Table.Body>
+                                </>
                             )}
-                        </>
-                    )}
-                </ViewGroup>
-            ) : (
-                <ErrorGroup
-                    title={"المديرين الحاليين"}
-                    message={"ليس لديك صلاحية"}
-                />
-            )}
+                        </TableGroup>
+
+                        {data.total_pages > 1 && (
+                            <TablePagination
+                                totalPages={data.total_pages}
+                                currentPage={data.current_page}
+                                onPageChange={(page) => setPageNumber(page)}
+                            />
+                        )}
+                    </>
+                )}
+            </ViewGroup>
         </>
     );
 };

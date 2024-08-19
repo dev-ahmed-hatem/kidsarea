@@ -9,17 +9,11 @@ import endpoints from "../../../config/config";
 import GameForm from "./GameForm";
 import { fetch_list_data } from "../../../config/actions";
 import ConfirmDelete from "../../groups/ConfirmDelete";
-import ErrorGroup from "../../groups/ErrorGroup";
-import { usePermission } from "../../../providers/PermissionProvider";
 import { useDrawer } from "../../../providers/DrawerProvider";
 
 const Games = () => {
     //////////////////////////////// providers ////////////////////////////////
     const { showDrawer, closeDrawer } = useDrawer();
-    const { has_permission } = usePermission();
-
-    //////////////////////////////// permissions ////////////////////////////////
-    const [app_label, model_name, perm_name] = ["games", "game", "game"];
 
     //////////////////////////////// list data ////////////////////////////////
     const [data, setData] = useState([]);
@@ -79,148 +73,113 @@ const Games = () => {
     };
 
     useEffect(() => {
-        if (has_permission(`${app_label}.${model_name}`, `view_${perm_name}`)) {
-            get_current_games();
-        }
+        get_current_games();
     }, [searchParam, pageNumber]);
 
     return (
         <>
             {/* add form */}
-            {has_permission(
-                `${app_label}.${model_name}`,
-                `add_${perm_name}`
-            ) ? (
-                <GameForm
-                    postURL={endpoints.game_list}
-                    callBack={get_current_games}
-                />
-            ) : (
-                <ErrorGroup title={"إضافة لعبة"} message={"ليس لديك صلاحية"} />
-            )}
+            <GameForm
+                postURL={endpoints.game_list}
+                callBack={get_current_games}
+            />
 
             {/* table data */}
-            {has_permission(
-                `${app_label}.${model_name}`,
-                `view_${perm_name}`
-            ) ? (
-                <ViewGroup title={"الألعاب الحالية"}>
-                    {loading ? (
-                        <Loading />
-                    ) : fetchError ? (
-                        <p className="text-lg text-center text-red-600 py-4">
-                            خطأ في تحميل البيانات
-                        </p>
-                    ) : (
-                        <>
-                            <TableGroup
-                                onChange={(event) => {
-                                    setSearchParam(event.target.value);
-                                    setPageNumber(1);
-                                }}
-                            >
-                                {data.count == 0 ? (
+            <ViewGroup title={"الألعاب الحالية"}>
+                {loading ? (
+                    <Loading />
+                ) : fetchError ? (
+                    <p className="text-lg text-center text-red-600 py-4">
+                        خطأ في تحميل البيانات
+                    </p>
+                ) : (
+                    <>
+                        <TableGroup
+                            onChange={(event) => {
+                                setSearchParam(event.target.value);
+                                setPageNumber(1);
+                            }}
+                        >
+                            {data.count == 0 ? (
+                                <Table.Body>
+                                    <Table.Row className="text-lg text-center text-gray-800 py-3 font-bold bg-red-500">
+                                        <Table.Cell>لا توجد بيانات</Table.Cell>
+                                    </Table.Row>
+                                </Table.Body>
+                            ) : (
+                                <>
+                                    <Table.Head>
+                                        <Table.HeadCell>
+                                            اسم اللعبة
+                                        </Table.HeadCell>
+                                        <Table.HeadCell>السعر</Table.HeadCell>
+                                        <Table.HeadCell>إجراءات</Table.HeadCell>
+                                    </Table.Head>
                                     <Table.Body>
-                                        <Table.Row className="text-lg text-center text-gray-800 py-3 font-bold bg-red-500">
-                                            <Table.Cell>
-                                                لا توجد بيانات
-                                            </Table.Cell>
-                                        </Table.Row>
-                                    </Table.Body>
-                                ) : (
-                                    <>
-                                        <Table.Head>
-                                            <Table.HeadCell>
-                                                اسم اللعبة
-                                            </Table.HeadCell>
-                                            <Table.HeadCell>
-                                                السعر
-                                            </Table.HeadCell>
-                                            <Table.HeadCell>
-                                                إجراءات
-                                            </Table.HeadCell>
-                                        </Table.Head>
-                                        <Table.Body>
-                                            {data.results.map((game) => {
-                                                return (
-                                                    <Table.Row
-                                                        key={game.id}
-                                                        className="bg-white font-medium text-gray-900"
-                                                    >
-                                                        <Table.Cell>
-                                                            {game.name ? (
-                                                                game.name
-                                                            ) : (
-                                                                <span className="text-red-600">
-                                                                    غير مسجل
-                                                                </span>
-                                                            )}
-                                                        </Table.Cell>
-                                                        <Table.Cell>
-                                                            {game.price ? (
-                                                                game.price
-                                                            ) : (
-                                                                <span className="text-red-600">
-                                                                    غير مسجل
-                                                                </span>
-                                                            )}
-                                                        </Table.Cell>
-                                                        <Table.Cell>
-                                                            <span className="flex text-xl gap-x-3">
-                                                                {has_permission(
-                                                                    `${app_label}.${model_name}`,
-                                                                    `change_${perm_name}`
-                                                                ) && (
-                                                                    <MdEdit
-                                                                        className="text-accent cursor-pointer"
-                                                                        onClick={() => {
-                                                                            handleDrawer(
-                                                                                "edit",
-                                                                                game
-                                                                            );
-                                                                        }}
-                                                                    />
-                                                                )}
-                                                                {has_permission(
-                                                                    `${app_label}.${model_name}`,
-                                                                    `delete_${perm_name}`
-                                                                ) && (
-                                                                    <MdDelete
-                                                                        className="text-secondary cursor-pointer"
-                                                                        onClick={() => {
-                                                                            handleDrawer(
-                                                                                "delete",
-                                                                                game
-                                                                            );
-                                                                        }}
-                                                                    />
-                                                                )}
+                                        {data.results.map((game) => {
+                                            return (
+                                                <Table.Row
+                                                    key={game.id}
+                                                    className="bg-white font-medium text-gray-900"
+                                                >
+                                                    <Table.Cell>
+                                                        {game.name ? (
+                                                            game.name
+                                                        ) : (
+                                                            <span className="text-red-600">
+                                                                غير مسجل
                                                             </span>
-                                                        </Table.Cell>
-                                                    </Table.Row>
-                                                );
-                                            })}
-                                        </Table.Body>
-                                    </>
-                                )}
-                            </TableGroup>
-
-                            {data.total_pages > 1 && (
-                                <TablePagination
-                                    totalPages={data.total_pages}
-                                    currentPage={data.current_page}
-                                    onPageChange={(page) => setPageNumber(page)}
-                                />
+                                                        )}
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        {game.price ? (
+                                                            game.price
+                                                        ) : (
+                                                            <span className="text-red-600">
+                                                                غير مسجل
+                                                            </span>
+                                                        )}
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        <span className="flex text-xl gap-x-3">
+                                                            <MdEdit
+                                                                className="text-accent cursor-pointer"
+                                                                onClick={() => {
+                                                                    handleDrawer(
+                                                                        "edit",
+                                                                        game
+                                                                    );
+                                                                }}
+                                                            />
+                                                            <MdDelete
+                                                                className="text-secondary cursor-pointer"
+                                                                onClick={() => {
+                                                                    handleDrawer(
+                                                                        "delete",
+                                                                        game
+                                                                    );
+                                                                }}
+                                                            />
+                                                        </span>
+                                                    </Table.Cell>
+                                                </Table.Row>
+                                            );
+                                        })}
+                                    </Table.Body>
+                                </>
                             )}
-                        </>
-                    )}
-                </ViewGroup>
-            ) : (
-                <ErrorGroup
-                    title={"الألعاب الحالية"}
-                    message={"ليس لديك صلاحية"}
-                />
-            )}
+                        </TableGroup>
+
+                        {data.total_pages > 1 && (
+                            <TablePagination
+                                totalPages={data.total_pages}
+                                currentPage={data.current_page}
+                                onPageChange={(page) => setPageNumber(page)}
+                            />
+                        )}
+                    </>
+                )}
+            </ViewGroup>
         </>
     );
 };
