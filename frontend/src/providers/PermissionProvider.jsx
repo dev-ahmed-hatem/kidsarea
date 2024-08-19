@@ -1,4 +1,10 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, {
+    useState,
+    useEffect,
+    createContext,
+    useContext,
+    useCallback,
+} from "react";
 import Loading from "../components/groups/Loading";
 import { set_page_permissions } from "../config/actions";
 
@@ -31,11 +37,14 @@ const PermissionProvider = ({ permissions_list, children }) => {
         });
     }, [permissions_list]);
 
-    const has_permission = (model_name, perm) => {
-        if (is_superuser) return true;
-        const model_perms = Array.from(permissions[model_name]);
-        return model_perms.includes(perm) ? true : false;
-    };
+    const has_permission = useCallback(
+        (model_name, perm) => {
+            if (is_superuser) return true;
+            const model_perms = Array.from(permissions[model_name]);
+            return model_perms.includes(perm) ? true : false;
+        },
+        [permissions, is_superuser]
+    );
 
     if (loading) return <Loading />;
     if (loadError)
