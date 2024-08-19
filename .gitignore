@@ -13,7 +13,7 @@ dist-ssr
 *.local
 
 # Editor directories and files
-vscode/*
+.vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -61,29 +61,3 @@ backend/*.log
 
 # Ignore environment variables
 backend/.env
-
-# Ignore node modules directory
-frontend/node_modules/
-
-# Ignore build output
-frontend/build/
-frontend/dist/
-
-# Ignore logs
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
-
-# Ignore environment variables
-frontend/.env
-
-# Ignore editor and OS-specific files
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
-*.swp
-
-# celery files
-celerybeat*
-*.rdb
