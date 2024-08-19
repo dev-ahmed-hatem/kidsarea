@@ -4,6 +4,7 @@ import NotFound from "../NotFound";
 import Main from "../components/main";
 import { routes } from "./Index";
 import Login from "../components/login/Login";
+import PermissionProvider from "../providers/PermissionProvider";
 
 export const browserRoutes = [
     {
@@ -32,7 +33,16 @@ routes.map((route) => {
         children: route.children.map((child) => {
             return {
                 path: child.url,
-                element: child.element? child.element : <Subsection />,
+                element: child.element ? (
+                    <PermissionProvider
+                        key={child.name}
+                        permissions_list={child.permissions}
+                    >
+                        {child.element}
+                    </PermissionProvider>
+                ) : (
+                    <Subsection />
+                ),
             };
         }),
     });
