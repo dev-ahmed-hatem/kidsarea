@@ -7,13 +7,11 @@ import { Flowbite } from "flowbite-react";
 import theme from "./assets/FlowbiteTheme.jsx";
 
 createRoot(document.getElementById("root")).render(
-    <div className="font-bold text-center text-3xl">Test Content</div>
+    <StrictMode>
+        <Flowbite theme={{ theme: theme }}>
+            <RouterProvider
+                router={createBrowserRouter(browserRoutes)}
+            ></RouterProvider>
+        </Flowbite>
+    </StrictMode>
 );
-
-// <StrictMode>
-//     {/* <Flowbite theme={{ theme: theme }}>
-//         <RouterProvider
-//             router={createBrowserRouter(browserRoutes)}
-//         ></RouterProvider>
-//     </Flowbite> */}
-// </StrictMode>
