@@ -9,9 +9,10 @@ import theme from "./assets/FlowbiteTheme.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <Flowbite theme={{ theme: theme }}>
-            <RouterProvider
-                router={createBrowserRouter(browserRoutes)}
-            ></RouterProvider>
+            <div className="font-bold text-2xl text-center">Main Content</div>
+            {/* <RouterProvider */}
+                {/* // router={createBrowserRouter(browserRoutes)} */}
+            {/* ></RouterProvider> */}
         </Flowbite>
     </React.StrictMode>
 );

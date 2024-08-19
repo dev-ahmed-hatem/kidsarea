@@ -104,7 +104,7 @@ export const routes = [
         ],
     },
     {
-        id: 7,
+        id: 3,
         title: "التذاكر",
         name: "tickets",
         url: "/tickets",
