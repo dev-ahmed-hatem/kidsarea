@@ -67,20 +67,17 @@ const Main = () => {
                 </div>
             ) : (
                 // <ToastProvider>
-                    // <DrawerProvider>
-                    <>
-                        <Navbar
-                            menuState={menuOpen}
-                            setMenuState={setMenuOpen}
-                            />
-                        <Menu
-                            menuOpen={menuOpen}
-                            setMenuState={setMenuOpen}
-                            ref={menuRef}
-                            />
-                        {isHome ? <Home /> : <Outlet />}
-                            </>
-                    // </DrawerProvider>
+                // <DrawerProvider>
+                <>
+                    <Navbar menuState={menuOpen} setMenuState={setMenuOpen} />
+                    <Menu
+                        menuOpen={menuOpen}
+                        setMenuState={setMenuOpen}
+                        ref={menuRef}
+                    />
+                    {isHome ? <Home /> : <Outlet />}
+                </>
+                // </DrawerProvider>
                 // </ToastProvider>
             )}
         </>
