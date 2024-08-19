@@ -3,25 +3,17 @@ import { Label, Table, Datepicker } from "flowbite-react";
 import Loading from "../groups/Loading";
 import ViewGroup from "../groups/ViewGroup";
 import TableGroup from "../groups/TableGroup";
-import Notification from "../groups/Notification";
 import { MdEdit, MdDelete } from "react-icons/md";
-import DrawerHeader from "../groups/DrawerHeader";
 import TablePagination from "../groups/TablePagination";
 import endpoints from "../../config/config";
 import TicketForm from "./TicketForm";
 import { fetch_list_data } from "../../config/actions";
 import ConfirmDelete from "../groups/ConfirmDelete";
-import ErrorGroup from "../groups/ErrorGroup";
-import { usePermission } from "../../providers/PermissionProvider";
 import { useDrawer } from "../../providers/DrawerProvider";
 
 const Ticket = () => {
     //////////////////////////////// providers ////////////////////////////////
     const { showDrawer, closeDrawer } = useDrawer();
-    const { has_permission } = usePermission();
-
-    //////////////////////////////// permissions ////////////////////////////////
-    const [app_label, model_name, perm_name] = ["tickets", "ticket", "ticket"];
 
     //////////////////////////////// list data ////////////////////////////////
     const [data, setData] = useState([]);
@@ -84,9 +76,7 @@ const Ticket = () => {
     };
 
     useEffect(() => {
-        if (has_permission(`${app_label}.${model_name}`, `view_${perm_name}`)) {
-            get_current_tickets();
-        }
+        get_current_tickets();
     }, [searchParam, pageNumber, date]);
 
     return (
