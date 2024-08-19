@@ -1,14 +1,14 @@
-// import {
+import {
 //     FaUsers,
 //     FaCog,
 //     FaMoneyBill,
 //     FaUserTie,
-//     FaTicketAlt,
-// } from "react-icons/fa";
+    FaTicketAlt,
+} from "react-icons/fa";
 // import Managers from "../components/users/managers/Managers";
 // import { BiSolidCategory } from "react-icons/bi";
-// import Ticket from "../components/tickets/Ticket";
-// import PermissionProvider from "../providers/PermissionProvider";
+import Ticket from "../components/tickets/Ticket";
+import PermissionProvider from "../providers/PermissionProvider";
 import TicketsFilter from "../components/tickets/TicketsFilter";
 // import Games from "../components/settings/games/Games";
 import { SlCalender } from "react-icons/sl";
@@ -115,15 +115,15 @@ export const routes = [
                 title: "إضافة تذكرة",
                 name: "add-ticket",
                 url: "/tickets/add-ticket",
-                // icon: <FaTicketAlt />,
-                // element: (
-                //     <PermissionProvider
-                //         key={"tickets"}
-                //         permissions_list={["tickets.ticket"]}
-                //     >
-                //         <Ticket />,
-                //     </PermissionProvider>
-                // ),
+                icon: <FaTicketAlt />,
+                element: (
+                    <PermissionProvider
+                        key={"tickets"}
+                        permissions_list={["tickets.ticket"]}
+                    >
+                        <Ticket />,
+                    </PermissionProvider>
+                ),
             },
             {
                 id: 2,
