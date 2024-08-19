@@ -6,7 +6,6 @@ import { useForm, Controller } from "react-hook-form";
 import endpoints from "../../config/config";
 import { fetch_list_data } from "../../config/actions";
 import TicketCard from "./TicketCard";
-// import SubscriptionCard from "./SubscriptionCard";
 
 const TicketsFilterForm = ({ setLoading, setFetchError, setData }) => {
     const [post, setPost] = useState(false);

@@ -9,9 +9,9 @@
 // import { BiSolidCategory } from "react-icons/bi";
 // import Ticket from "../components/tickets/Ticket";
 // import PermissionProvider from "../providers/PermissionProvider";
-// import TicketsFilter from "../components/tickets/TicketsFilter";
+import TicketsFilter from "../components/tickets/TicketsFilter";
 // import Games from "../components/settings/games/Games";
-// import { SlCalender } from "react-icons/sl";
+import { SlCalender } from "react-icons/sl";
 
 export const routes = [
     {
@@ -130,8 +130,8 @@ export const routes = [
                 title: "التذاكر خلال فترة",
                 name: "salaries",
                 url: "/tickets/within-duration",
-                // icon: <SlCalender />,
-                // element: <TicketsFilter />,
+                icon: <SlCalender />,
+                element: <TicketsFilter />,
             },
         ],
     },
