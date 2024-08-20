@@ -12,7 +12,7 @@ const Report = () => {
     }, []);
 
     return (
-        <div className="w-[30mm] text-xs py=[10mm] px-0 my-0 mx-auto text-center">
+        <div className="w-[26mm] text-xs py=[10mm] px-0 my-0 mx-auto text-center">
             {/* Logo */}
             <img
                 src="./logo.jpeg"
@@ -24,7 +24,7 @@ const Report = () => {
             <p className="text-center mb-2">إلى : {data.to_date}</p>
 
             {/* Table Headers */}
-            <table className="text-center my-5 w-full">
+            <table className="text-center text-[10px] font-ligh my-5 w-full">
                 <thead>
                     <tr>
                         <th className="h-10 text-center border border-black">
@@ -34,7 +34,7 @@ const Report = () => {
                             السعر
                         </th>
                         <th className="h-10 text-center border border-black">
-                            الإجمالى
+                            إجمالى
                         </th>
                     </tr>
                 </thead>
