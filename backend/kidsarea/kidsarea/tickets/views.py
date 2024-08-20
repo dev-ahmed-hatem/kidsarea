@@ -40,27 +40,29 @@ def get_tickets_within_duration(request):
             Q(date__lte=make_aware(to_date))
         )
 
-        # generate a dict of days containing all tickets associate to them
-        current_date = from_date
-        dates = []
-        while current_date <= to_date:
-            dates.append(current_date.date())
-            current_date += timedelta(days=1)
-
-        # Initialize a dictionary to hold the date as key and list of instances as value
-        instances_by_date = defaultdict(list)
-
-        for ticket in queryset:
-            instances_by_date[ticket.date].append(ticket)
+        # # generate a dict of days containing all tickets associate to them
+        # current_date = from_date
+        # dates = []
+        # while current_date <= to_date:
+        #     dates.append(current_date.date())
+        #     current_date += timedelta(days=1)
+        #
+        # # Initialize a dictionary to hold the date as key and list of instances as value
+        # instances_by_date = defaultdict(list)
+        #
+        # for ticket in queryset:
+        #     instances_by_date[ticket.date].append(ticket)
 
         response_data = {}
-        for date in dates:
-            serialized_tickets = TicketReadSerializer(instances_by_date[date], context={"request": request},
-                                                      many=True)
-            response_data[date.strftime("%Y-%m-%d")] = {"tickets": serialized_tickets.data,
-                                                        "total_tickets": len(serialized_tickets.data),
-                                                        "total_price": sum(
-                                                            ticket["total_price"] for ticket in serialized_tickets.data)
-                                                        }
+        # for date in dates:
+        serialized_tickets = TicketReadSerializer(queryset, context={"request": request},
+                                                  many=True)
+        response_data = {"tickets": serialized_tickets.data,
+                         "total_tickets": len(serialized_tickets.data),
+                         "total_price": sum(
+                             ticket["total_price"] for ticket in serialized_tickets.data),
+                         "from_date": from_date.strftime("%Y/%m/%d"),
+                         "to_date": to_date.strftime("%Y/%m/%d"),
+                         }
 
         return Response(response_data)
