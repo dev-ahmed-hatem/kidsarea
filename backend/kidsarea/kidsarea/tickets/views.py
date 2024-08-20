@@ -47,7 +47,7 @@ def get_tickets_within_duration(request):
         response_data = {"tickets": serialized_tickets.data,
                          "total_tickets": sum(len(ticket["items"]) for ticket in serialized_tickets.data),
                          "total_price": sum(
-                             float(ticket["total_price"]) for ticket in serialized_tickets.data),
+                             Decimal(ticket["after_discount"]) for ticket in serialized_tickets.data),
                          "from_date": from_date.strftime("%Y/%m/%d"),
                          "to_date": to_date.strftime("%Y/%m/%d"),
                          }
