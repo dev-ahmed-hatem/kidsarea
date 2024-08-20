@@ -12,12 +12,12 @@ const Report = () => {
     }, []);
 
     return (
-        <div className="w-[48mm] py=[10mm] px-0 my-0 mx-auto text-center">
+        <div className="w-[40mm] text-sm py=[10mm] px-0 my-0 mx-auto text-center">
             {/* Logo */}
             <img
                 src="./logo.jpeg"
                 alt="Logo"
-                className="w-32 inline-block rounded-full"
+                className="w-24 inline-block rounded-full"
             />
             <p className="text-center my-4">تقرير تذاكر</p>
             <p className="text-center mt-2">من : {data.from_date}</p>
