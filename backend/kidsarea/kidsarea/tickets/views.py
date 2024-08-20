@@ -58,7 +58,7 @@ def get_tickets_within_duration(request):
         serialized_tickets = TicketReadSerializer(queryset, context={"request": request},
                                                   many=True)
         response_data = {"tickets": serialized_tickets.data,
-                         "total_tickets": len(serialized_tickets.data),
+                         "total_tickets": sum(ticket["amount"] for ticket in serialized_tickets.data),
                          "total_price": sum(
                              ticket["total_price"] for ticket in serialized_tickets.data),
                          "from_date": from_date.strftime("%Y/%m/%d"),
