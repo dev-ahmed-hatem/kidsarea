@@ -336,6 +336,7 @@ const TicketForm = ({ postURL, defaultValues, callBack }) => {
 };
 
 const TicketSale = () => {
+    const navigate = useNavigate();
     //////////////////////////////// providers ////////////////////////////////
     const { showDrawer, closeDrawer } = useDrawer();
 
@@ -458,12 +459,7 @@ const TicketSale = () => {
                                         <Table.HeadCell>
                                             رقم التذكرة
                                         </Table.HeadCell>
-                                        <Table.HeadCell>اللعبة</Table.HeadCell>
-                                        <Table.HeadCell>السعر</Table.HeadCell>
-                                        <Table.HeadCell>الكمية</Table.HeadCell>
-                                        <Table.HeadCell>
-                                            الإجمالى
-                                        </Table.HeadCell>
+                                        <Table.HeadCell>الصافى</Table.HeadCell>
                                         <Table.HeadCell>التاريخ</Table.HeadCell>
                                         <Table.HeadCell>إجراءات</Table.HeadCell>
                                     </Table.Head>
@@ -484,35 +480,8 @@ const TicketSale = () => {
                                                         )}
                                                     </Table.Cell>
                                                     <Table.Cell>
-                                                        {ticket.game?.name ? (
-                                                            ticket.game?.name
-                                                        ) : (
-                                                            <span className="text-red-600">
-                                                                غير مسجل
-                                                            </span>
-                                                        )}
-                                                    </Table.Cell>
-                                                    <Table.Cell>
-                                                        {ticket.game?.price ? (
-                                                            ticket.game?.price
-                                                        ) : (
-                                                            <span className="text-red-600">
-                                                                غير مسجل
-                                                            </span>
-                                                        )}
-                                                    </Table.Cell>
-                                                    <Table.Cell>
-                                                        {ticket.amount ? (
-                                                            ticket.amount
-                                                        ) : (
-                                                            <span className="text-red-600">
-                                                                غير مسجل
-                                                            </span>
-                                                        )}
-                                                    </Table.Cell>
-                                                    <Table.Cell>
-                                                        {ticket.total_price ? (
-                                                            ticket.total_price
+                                                        {ticket.after_discount ? (
+                                                            ticket.after_discount
                                                         ) : (
                                                             <span className="text-red-600">
                                                                 غير مسجل
@@ -533,21 +502,18 @@ const TicketSale = () => {
                                                             <FaPrint
                                                                 className="text-accent cursor-pointer"
                                                                 onClick={() => {
-                                                                    printTicket(
-                                                                        ticket
+                                                                    navigate(
+                                                                        "/sale-ticket-print",
+                                                                        {
+                                                                            state: {
+                                                                                sale_ticket:
+                                                                                    ticket,
+                                                                            },
+                                                                        }
                                                                     );
                                                                 }}
                                                             />
-                                                            <MdEdit
-                                                                className="text-accent cursor-pointer"
-                                                                onClick={() => {
-                                                                    handleDrawer(
-                                                                        "edit",
-                                                                        ticket
-                                                                    );
-                                                                }}
-                                                            />
-                                                            <MdDelete
+                                                            {/* <MdDelete
                                                                 className="text-secondary cursor-pointer"
                                                                 onClick={() => {
                                                                     handleDrawer(
@@ -555,7 +521,7 @@ const TicketSale = () => {
                                                                         ticket
                                                                     );
                                                                 }}
-                                                            />
+                                                            /> */}
                                                         </span>
                                                     </Table.Cell>
                                                 </Table.Row>

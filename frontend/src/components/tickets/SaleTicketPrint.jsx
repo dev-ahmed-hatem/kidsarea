@@ -8,13 +8,21 @@ const SaleTicketPrint = ({}) => {
     const { sale_ticket } = location.state || {};
 
     useEffect(() => {
-        window.print();
-        navigate("/tickets/sale-ticket");
+        setTimeout(() => {
+            window.print();
+            navigate("/tickets/sale-ticket");
+        }, 2000);
     }, []);
 
     return (
         <div className="w-full">
-            <h1 className="font-bold text-center text-3xl pt-4">Happy Land</h1>
+            <div className="font-bold text-center text-3xl pt-4">
+                <img
+                    src="./logo.jpeg"
+                    className="w-52 inline-block rounded-full"
+                    alt=""
+                />
+            </div>
             <div>
                 <p className="text-center my-4">تذكرة ألعاب</p>
             </div>
@@ -62,29 +70,35 @@ const SaleTicketPrint = ({}) => {
                     </Table.Body>
                 </Table>
             </div>
-            <div className="totals text-base text-center">
-                <div className="mt-8">
-                    <label>
-                        الإجمالى :{" "}
-                        <span className="mx-3">
-                            {sale_ticket.total_price} جنيه
-                        </span>
-                    </label>
+            <div className="flex justify-between align-top px-10 py-6">
+                <div className="totals text-base text-center">
+                    <div className="mt-8">
+                        <label>
+                            الإجمالى :{" "}
+                            <span className="mx-3">
+                                {sale_ticket.total_price} جنيه
+                            </span>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            نسبة الخصم :{" "}
+                            <span className="mx-3">
+                                {sale_ticket.discount} %
+                            </span>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            الصافى :{" "}
+                            <span className="mx-3">
+                                {sale_ticket.after_discount} جنيه
+                            </span>
+                        </label>
+                    </div>
                 </div>
-                <div>
-                    <label>
-                        نسبة الخصم :{" "}
-                        <span className="mx-3">{sale_ticket.discount} %</span>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        الصافى :{" "}
-                        <span className="mx-3">
-                            {sale_ticket.after_discount} جنيه
-                        </span>
-                    </label>
-                </div>
+
+                <img src="./qr.png" className="w-24" alt="" />
             </div>
         </div>
     );
