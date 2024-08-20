@@ -22,12 +22,20 @@ const SaleTicketPrint = ({}) => {
                 <p className="text-center my-4">التاريخ: {sale_ticket.date}</p>
             </div>
             <div className="table-wrapper overflow-x-auto w-full">
-                <Table className="min-w-[400px]">
+                <Table className="min-w-[400px]" border={"1px"}>
                     <Table.Head className="text-right">
-                        <Table.HeadCell>اسم اللعبة</Table.HeadCell>
-                        <Table.HeadCell>السعر</Table.HeadCell>
-                        <Table.HeadCell>الكمية</Table.HeadCell>
-                        <Table.HeadCell>الإجمالى</Table.HeadCell>
+                        <Table.HeadCell className="border border-black">
+                            اسم اللعبة
+                        </Table.HeadCell>
+                        <Table.HeadCell className="border border-black">
+                            السعر
+                        </Table.HeadCell>
+                        <Table.HeadCell className="border border-black">
+                            الكمية
+                        </Table.HeadCell>
+                        <Table.HeadCell className="border border-black">
+                            الإجمالى
+                        </Table.HeadCell>
                     </Table.Head>
                     <Table.Body>
                         {sale_ticket?.items?.map((item) => (
@@ -35,18 +43,18 @@ const SaleTicketPrint = ({}) => {
                                 key={item.id}
                                 className="mb-8 text-right"
                             >
-                                <Table.Cell>
+                                <Table.Cell className="border border-black">
                                     <label className="mx-4">
                                         {item.game.name}
                                     </label>
                                 </Table.Cell>
-                                <Table.Cell>
+                                <Table.Cell className="border border-black">
                                     <label>{item.game.price} جنيه</label>
                                 </Table.Cell>
-                                <Table.Cell>
+                                <Table.Cell className="border border-black">
                                     <label>{item.amount}</label>
                                 </Table.Cell>
-                                <Table.Cell>
+                                <Table.Cell className="border border-black">
                                     <label>{item.total_price} جنيه</label>
                                 </Table.Cell>
                             </Table.Row>
