@@ -12,28 +12,28 @@ const Report = () => {
     }, []);
 
     return (
-        <div className="w-[26mm] text-xs py=[10mm] px-0 my-0 text-center">
+        <div className="w-[20mm] text-[8px] py=[10mm] px-0 my-0 text-center">
             {/* Logo */}
             <img
                 src="./logo.jpeg"
                 alt="Logo"
-                className="w-20 inline-block rounded-full"
+                className="w-16 inline-block rounded-full"
             />
-            <p className="text-center my-4">تقرير تذاكر</p>
-            <p className="text-center mt-2">من : {data.from_date}</p>
-            <p className="text-center mb-2">إلى : {data.to_date}</p>
+            <p className="text-center my-2">تقرير تذاكر</p>
+            <p className="text-center mt-1">من : {data.from_date}</p>
+            <p className="text-center mb-1">إلى : {data.to_date}</p>
 
             {/* Table Headers */}
-            <table className="text-center text-[10px] font-ligh my-5 w-full">
+            <table className="text-center text-[6px] font-ligh my-5 w-full">
                 <thead>
                     <tr>
-                        <th className="h-10 text-center border border-black">
+                        <th className="h-8 text-center border border-black">
                             اللعبة
                         </th>
-                        <th className="h-10 text-center border border-black">
+                        <th className="h-8 text-center border border-black">
                             السعر
                         </th>
-                        <th className="h-10 text-center border border-black">
+                        <th className="h-8 text-center border border-black">
                             إجمالى
                         </th>
                     </tr>
@@ -43,21 +43,21 @@ const Report = () => {
                     {data.tickets.map((ticket) => {
                         return ticket.items.map((item, index) => (
                             <tr key={index}>
-                                <td className="h-10 text-center border border-black">
+                                <td className="h-8 text-center border border-black">
                                     {item.game.name}
                                 </td>
-                                <td className="h-10 text-center border border-black">
+                                <td className="h-8 text-center border border-black">
                                     {Number.parseInt(item.game.price)}
                                 </td>
-                                <td className="h-10 text-center border border-black">
+                                <td className="h-8 text-center border border-black">
                                     {item.total_price}
                                 </td>
                             </tr>
                         ));
                     })}
                     <tr>
-                        <td className="h-10 text-center border border-black" colSpan={2}>الإجمالى :</td>
-                        <td className="h-10 text-center border border-black">{data.total_price} جنيه</td>
+                        <td className="h-8 text-center border border-black" colSpan={2}>الإجمالى :</td>
+                        <td className="h-8 text-center border border-black">{data.total_price} جنيه</td>
                     </tr>
                 </tbody>
             </table>
