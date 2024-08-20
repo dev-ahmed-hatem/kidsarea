@@ -56,8 +56,8 @@ const Report = () => {
                         ));
                     })}
                     <tr>
-                        <td className="h-8 text-center border border-black" colSpan={2}>الإجمالى :</td>
-                        <td className="h-8 text-center border border-black">{data.total_price} جنيه</td>
+                        <td className="h-8 text-center border border-black">إجمالى</td>
+                        <td className="h-8 text-center border border-black" colSpan={2}>{data.total_price} جنيه</td>
                     </tr>
                 </tbody>
             </table>
