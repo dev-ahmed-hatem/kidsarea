@@ -19,7 +19,7 @@ class Ticket(models.Model):
 
 
 class SaleTicket(models.Model):
-    date = models.DateField(default=now)
+    date = models.DateField(default=now().date)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     discount = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     after_discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
