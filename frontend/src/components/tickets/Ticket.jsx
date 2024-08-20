@@ -10,6 +10,8 @@ import TicketForm from "./TicketForm";
 import { fetch_list_data } from "../../config/actions";
 import ConfirmDelete from "../groups/ConfirmDelete";
 import { useDrawer } from "../../providers/DrawerProvider";
+import { FaPrint } from "react-icons/fa";
+import { handlePrint } from "./utils";
 
 const Ticket = () => {
     //////////////////////////////// providers ////////////////////////////////
@@ -206,6 +208,14 @@ const Ticket = () => {
                                                     </Table.Cell>
                                                     <Table.Cell>
                                                         <span className="flex text-xl gap-x-3">
+                                                            <FaPrint
+                                                                className="text-accent cursor-pointer"
+                                                                onClick={() => {
+                                                                    handlePrint(
+                                                                        ticket
+                                                                    );
+                                                                }}
+                                                            />
                                                             <MdEdit
                                                                 className="text-accent cursor-pointer"
                                                                 onClick={() => {

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kids Area Ticket Printing</title>
+        <style>
+            /* Styling for the print view */
+            #printableTicket {
+                display: none;
+                width: 80mm; /* Standard receipt printer width */
+                font-family: Arial, sans-serif;
+                text-align: center;
+            }
+
+            @media print {
+                body * {
+                    visibility: hidden;
+                }
+                #printableTicket,
+                #printableTicket * {
+                    visibility: visible;
+                }
+                #printableTicket {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <button onclick="printTicket()">Print Ticket</button>
+
+        <!-- Hidden printable ticket area -->
+        <div id="printableTicket">
+            <img
+                src="kidsarea-logo.png"
+                alt="Kids Area Logo"
+                style="width: 60px"
+            />
+            <h2>Kids Area</h2>
+            <p>Ticket Details:</p>
+            <p id="ticketDetails">
+                Entry Time: 12:00 PM<br />Child Name: John Doe<br />Duration: 2
+                hours
+            </p>
+        </div>
+
+        <script>
+            function printTicket() {
+                // You can dynamically set the ticket details here if needed
+                const ticketDetails = document.getElementById("ticketDetails");
+                ticketDetails.innerHTML = `
+                Entry Time: ${new Date().toLocaleTimeString()}<br>
+                Child Name: John Doe<br>
+                Duration: 2 hours
+            `;
+
+                // Display the ticket area
+                const printableTicket =
+                    document.getElementById("printableTicket");
+                printableTicket.style.display = "block";
+
+                // Print the ticket
+                window.print();
+
+                // Hide the ticket area after printing
+                printableTicket.style.display = "none";
+            }
+        </script>
+    </body>
+</html>

@@ -170,6 +170,7 @@ const TicketsFilter = () => {
                     className={`wrapper p-4 my-8 bg-white rounded border-t-4 border-primary shadow-lg`}
                 >
                     <h1 className="font-bold text-text text-lg">
+                        <span className="inline-block w-full text-center text-3xl text-primary-900">Happy Land</span> <br />
                         التذاكر فى الفترة <br /> من:
                         <span className="text-primary font-bold mx-3">
                             {data?.from_date}
