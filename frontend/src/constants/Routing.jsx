@@ -4,6 +4,7 @@ import NotFound from "../NotFound";
 import Main from "../components/main";
 import { routes } from "./Index";
 import Login from "../components/login/Login";
+import SaleTicketPrint from "../components/tickets/SaleTicketPrint";
 
 export const browserRoutes = [
     {
@@ -20,6 +21,11 @@ export const browserRoutes = [
     {
         path: "/logout",
         element: <Main />,
+        errorElement: <NotFound />,
+    },
+    {
+        path: "/sale-ticket-print",
+        element: <SaleTicketPrint />,
         errorElement: <NotFound />,
     },
 ];

@@ -11,7 +11,7 @@ import { fetch_list_data } from "../../config/actions";
 import ConfirmDelete from "../groups/ConfirmDelete";
 import { useDrawer } from "../../providers/DrawerProvider";
 import { FaPrint } from "react-icons/fa";
-import { handlePrint } from "./utils";
+import { printTicket } from "./utils";
 
 const Ticket = () => {
     //////////////////////////////// providers ////////////////////////////////
@@ -211,7 +211,7 @@ const Ticket = () => {
                                                             <FaPrint
                                                                 className="text-accent cursor-pointer"
                                                                 onClick={() => {
-                                                                    handlePrint(
+                                                                    printTicket(
                                                                         ticket
                                                                     );
                                                                 }}

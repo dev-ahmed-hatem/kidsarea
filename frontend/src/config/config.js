@@ -18,6 +18,8 @@ const endpoints = {
     // ticket routing
     ticket_list: `${api_base_url}api/tickets/ticket/?`,
     tickets_within_duration: `${api_base_url}api/tickets/tickets-within-duration/?`,
+    sale_ticket: `${api_base_url}api/tickets/sale-ticket/?`,
+    sale_ticket_item: `${api_base_url}api/tickets/sale-ticket-item/?`,
 };
 
 export default endpoints;

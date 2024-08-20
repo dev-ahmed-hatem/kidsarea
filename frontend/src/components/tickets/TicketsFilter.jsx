@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import endpoints from "../../config/config";
 import { fetch_list_data } from "../../config/actions";
 import TicketCard from "./TicketCard";
+import { printReport } from "./utils";
 
 const TicketsFilterForm = ({ setLoading, setFetchError, setData }) => {
     const [post, setPost] = useState(false);
@@ -168,9 +169,25 @@ const TicketsFilter = () => {
             {(data || loading || fetchError) && (
                 <div
                     className={`wrapper p-4 my-8 bg-white rounded border-t-4 border-primary shadow-lg`}
+                    id="table"
                 >
+                    <Button
+                        color={"primary"}
+                        className="w-32 h-10 flex justify-center items-center"
+                        size={"xl"}
+                        onClick={() => {
+                            printReport(
+                                document.getElementById("table").innerHTML
+                            );
+                        }}
+                    >
+                        طباعة
+                    </Button>
                     <h1 className="font-bold text-text text-lg">
-                        <span className="inline-block w-full text-center text-3xl text-primary-900">Happy Land</span> <br />
+                        <span className="inline-block w-full text-center text-3xl text-primary-900">
+                            Happy Land
+                        </span>{" "}
+                        <br />
                         التذاكر فى الفترة <br /> من:
                         <span className="text-primary font-bold mx-3">
                             {data?.from_date}
@@ -203,9 +220,6 @@ const TicketsFilter = () => {
                                             >
                                                 <Table.Head>
                                                     <Table.HeadCell>
-                                                        رقم التذكرة
-                                                    </Table.HeadCell>
-                                                    <Table.HeadCell>
                                                         اللعبة
                                                     </Table.HeadCell>
                                                     <Table.HeadCell>
@@ -216,9 +230,6 @@ const TicketsFilter = () => {
                                                     </Table.HeadCell>
                                                     <Table.HeadCell>
                                                         الإجمالى
-                                                    </Table.HeadCell>
-                                                    <Table.HeadCell>
-                                                        التاريخ
                                                     </Table.HeadCell>
                                                 </Table.Head>
                                                 <Table.Body>
@@ -231,16 +242,6 @@ const TicketsFilter = () => {
                                                                     }
                                                                     className="bg-white font-medium text-gray-900"
                                                                 >
-                                                                    <Table.Cell>
-                                                                        {ticket.id ? (
-                                                                            ticket.id
-                                                                        ) : (
-                                                                            <span className="text-red-600">
-                                                                                غير
-                                                                                مسجل
-                                                                            </span>
-                                                                        )}
-                                                                    </Table.Cell>
                                                                     <Table.Cell>
                                                                         {ticket
                                                                             .game
@@ -289,16 +290,6 @@ const TicketsFilter = () => {
                                                                             </span>
                                                                         )}
                                                                     </Table.Cell>
-                                                                    <Table.Cell>
-                                                                        {ticket.date ? (
-                                                                            ticket.date
-                                                                        ) : (
-                                                                            <span className="text-red-600">
-                                                                                غير
-                                                                                مسجل
-                                                                            </span>
-                                                                        )}
-                                                                    </Table.Cell>
                                                                 </Table.Row>
                                                             );
                                                         }
@@ -322,61 +313,6 @@ const TicketsFilter = () => {
                                                 </span>
                                             </h1>
                                         </div>
-
-                                        {/* {Object.entries(data)?.map(
-                                            ([day, value]) => (
-                                                <div key={day} className="mb-14">
-                                                    <h1 className="text-lg mb-6">
-                                                        يوم :
-                                                        <span className="text-primary font-bold">
-                                                            {day}
-                                                        </span>
-                                                        <span className="block lg:mx-6 lg:inline-block">
-                                                            عدد التذاكر:{" "}
-                                                            <span className="text-primary font-bold">
-                                                                {
-                                                                    value.total_tickets
-                                                                }
-                                                            </span>
-                                                        </span>
-                                                        <span className="block lg:mx-6 lg:inline-block">
-                                                            إجمالى السعر :{" "}
-                                                            <span className="text-primary font-bold">
-                                                                {
-                                                                    value.total_price
-                                                                }{" "}
-                                                                جنيه
-                                                            </span>
-                                                        </span>
-                                                    </h1>
-
-                                                    <div className="subscriptions flex gap-x-4 lg:gap-x-10 gap-y-6 flex-wrap">
-                                                        {value?.tickets?.length == 0 ? (
-                                                            <p className="w-full text-lg text-center text-gray-800 py-3 font-bold bg-primary-200">
-                                                                لا توجد تذاكر
-                                                            </p>
-                                                        ) : (
-                                                            <>
-                                                                {value.tickets.map(
-                                                                    (
-                                                                        ticket
-                                                                    ) => (
-                                                                        <TicketCard
-                                                                            key={
-                                                                                ticket.id
-                                                                            }
-                                                                            ticket={
-                                                                                ticket
-                                                                            }
-                                                                        />
-                                                                    )
-                                                                )}
-                                                            </>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            )
-                                        )} */}
                                     </>
                                 )}
                             </div>

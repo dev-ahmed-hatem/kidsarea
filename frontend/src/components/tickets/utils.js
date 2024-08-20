@@ -1,4 +1,4 @@
-export const handlePrint = (ticket) => {
+export const printTicket = (ticket) => {
     const printContent = `
     <div style="width: 80mm; font-family: Arial, sans-serif; text-align: center; padding: 10px;">
     <h1 style="color: #ff5733; font-size: 24px; margin-bottom: 20px;">
@@ -37,15 +37,45 @@ export const handlePrint = (ticket) => {
     setTimeout(() => {
         document.body.removeChild(iframe);
     }, 1000);
+};
 
-    // const printWindow = window.open("", "", "width=400,height=600");
-    // printWindow.document.write(
-    //     "<html><head><title>Print Ticket</title></head><body>"
-    // );
-    // printWindow.document.write(printContent);
-    // printWindow.document.write("</body></html>");
-    // // printWindow.document.close();
-    // printWindow.focus();
-    // printWindow.print();
-    // // printWindow.close();
+export const printReport = (table) => {
+    let iframe = document.createElement("iframe");
+    iframe.style.display = "none";
+    document.body.appendChild(iframe);
+
+    let doc = iframe.contentDocument || iframe.contentWindow.document;
+
+    // Copy all stylesheets to the iframe
+    Array.from(document.styleSheets).forEach((styleSheet) => {
+        // console.log(styleSheet);
+        
+        try {
+            if (styleSheet.cssRules) { // For same-origin stylesheets
+                let newStyleEl = document.createElement('style');
+                Array.from(styleSheet.cssRules).forEach((rule) => {
+                    newStyleEl.appendChild(document.createTextNode(rule.cssText));
+                });
+                doc.head.appendChild(newStyleEl);
+            } else if (styleSheet.href) { // For linked stylesheets
+                let newLinkEl = document.createElement('link');
+                newLinkEl.rel = 'stylesheet';
+                newLinkEl.href = styleSheet.href;
+                doc.head.appendChild(newLinkEl);
+            }
+        } catch (e) {
+            console.error(`Error processing stylesheet: ${styleSheet.href}`, e);
+        }
+    });
+
+    // Write the table HTML to the iframe document
+    doc.write(table);
+    doc.close();
+
+    // Print the iframe content
+    iframe.contentWindow.print();
+
+    setTimeout(() => {
+        document.body.removeChild(iframe);
+    }, 1000);
 };

@@ -11,6 +11,7 @@ import Ticket from "../components/tickets/Ticket";
 import TicketsFilter from "../components/tickets/TicketsFilter";
 import Games from "../components/settings/games/Games";
 import { SlCalender } from "react-icons/sl";
+import TicketSale from "../components/tickets/TicketSale";
 
 export const routes = [
     {
@@ -106,6 +107,15 @@ export const routes = [
             },
             {
                 id: 2,
+                title: "بيع تذكرة",
+                name: "sale-ticket",
+                url: "/tickets/sale-ticket",
+                icon: <FaTicketAlt />,
+                permissions: ["tickets.ticket"],
+                element: <TicketSale />,
+            },
+            {
+                id: 3,
                 title: "التذاكر خلال فترة",
                 name: "salaries",
                 url: "/tickets/within-duration",

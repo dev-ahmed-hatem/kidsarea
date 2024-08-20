@@ -20,6 +20,7 @@ export const defaultFormSubmission = ({
     message,
     reset,
     callBack,
+    onSuccess = null,
     setError,
 }) => {
     const requestMethod = formFunction == "add" ? axios.post : axios.patch;
@@ -29,6 +30,7 @@ export const defaultFormSubmission = ({
             showToast(message[formFunction]);
             reset();
             if (callBack) callBack();
+            if (onSuccess) onSuccess(response);
         })
         .catch((error) => {
             console.log(error);
