@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
-import { Label, Button, Datepicker } from "flowbite-react";
+import { Label, Button, Datepicker, Table } from "flowbite-react";
 import Loading from "../groups/Loading";
 import { useForm, Controller } from "react-hook-form";
 import endpoints from "../../config/config";
@@ -169,7 +169,16 @@ const TicketsFilter = () => {
                 <div
                     className={`wrapper p-4 my-8 bg-white rounded border-t-4 border-primary shadow-lg`}
                 >
-                    <h1 className="font-bold text-text text-lg">النتائج</h1>
+                    <h1 className="font-bold text-text text-lg">
+                        التذاكر فى الفترة <br /> من:
+                        <span className="text-primary font-bold mx-3">
+                            {data?.from_date}
+                        </span>
+                        إلى:
+                        <span className="text-primary font-bold mx-3">
+                            {data?.to_date}
+                        </span>
+                    </h1>
                     <hr className="h-px my-3 bg-gray-200 border-0"></hr>
                     {loading ? (
                         <Loading />
@@ -180,13 +189,140 @@ const TicketsFilter = () => {
                     ) : (
                         <>
                             <div className="tickets gap-y-6">
-                                {data?.length == 0 ? (
+                                {data?.tickets?.length == 0 ? (
                                     <p className="w-full text-lg text-center text-gray-800 py-3 font-bold bg-primary-200">
                                         لا توجد بيانات
                                     </p>
                                 ) : (
                                     <>
-                                        {Object.entries(data)?.map(
+                                        <div className="table-wrapper w-full overflow-x-auto">
+                                            <Table
+                                                striped
+                                                className="font-bold text-right"
+                                            >
+                                                <Table.Head>
+                                                    <Table.HeadCell>
+                                                        رقم التذكرة
+                                                    </Table.HeadCell>
+                                                    <Table.HeadCell>
+                                                        اللعبة
+                                                    </Table.HeadCell>
+                                                    <Table.HeadCell>
+                                                        السعر
+                                                    </Table.HeadCell>
+                                                    <Table.HeadCell>
+                                                        الكمية
+                                                    </Table.HeadCell>
+                                                    <Table.HeadCell>
+                                                        الإجمالى
+                                                    </Table.HeadCell>
+                                                    <Table.HeadCell>
+                                                        التاريخ
+                                                    </Table.HeadCell>
+                                                </Table.Head>
+                                                <Table.Body>
+                                                    {data?.tickets?.map(
+                                                        (ticket) => {
+                                                            return (
+                                                                <Table.Row
+                                                                    key={
+                                                                        ticket.id
+                                                                    }
+                                                                    className="bg-white font-medium text-gray-900"
+                                                                >
+                                                                    <Table.Cell>
+                                                                        {ticket.id ? (
+                                                                            ticket.id
+                                                                        ) : (
+                                                                            <span className="text-red-600">
+                                                                                غير
+                                                                                مسجل
+                                                                            </span>
+                                                                        )}
+                                                                    </Table.Cell>
+                                                                    <Table.Cell>
+                                                                        {ticket
+                                                                            .game
+                                                                            ?.name ? (
+                                                                            ticket
+                                                                                .game
+                                                                                ?.name
+                                                                        ) : (
+                                                                            <span className="text-red-600">
+                                                                                غير
+                                                                                مسجل
+                                                                            </span>
+                                                                        )}
+                                                                    </Table.Cell>
+                                                                    <Table.Cell>
+                                                                        {ticket
+                                                                            .game
+                                                                            ?.price ? (
+                                                                            ticket
+                                                                                .game
+                                                                                ?.price
+                                                                        ) : (
+                                                                            <span className="text-red-600">
+                                                                                غير
+                                                                                مسجل
+                                                                            </span>
+                                                                        )}
+                                                                    </Table.Cell>
+                                                                    <Table.Cell>
+                                                                        {ticket.amount ? (
+                                                                            ticket.amount
+                                                                        ) : (
+                                                                            <span className="text-red-600">
+                                                                                غير
+                                                                                مسجل
+                                                                            </span>
+                                                                        )}
+                                                                    </Table.Cell>
+                                                                    <Table.Cell>
+                                                                        {ticket.total_price ? (
+                                                                            ticket.total_price
+                                                                        ) : (
+                                                                            <span className="text-red-600">
+                                                                                غير
+                                                                                مسجل
+                                                                            </span>
+                                                                        )}
+                                                                    </Table.Cell>
+                                                                    <Table.Cell>
+                                                                        {ticket.date ? (
+                                                                            ticket.date
+                                                                        ) : (
+                                                                            <span className="text-red-600">
+                                                                                غير
+                                                                                مسجل
+                                                                            </span>
+                                                                        )}
+                                                                    </Table.Cell>
+                                                                </Table.Row>
+                                                            );
+                                                        }
+                                                    )}
+                                                </Table.Body>
+                                            </Table>
+                                        </div>
+                                        <div className="mt-6">
+                                            <h1 className="text-lg mb-6">
+                                                <span className="me-6 inline-block">
+                                                    عدد التذاكر:{" "}
+                                                    <span className="text-primary font-bold">
+                                                        {data?.total_tickets}
+                                                    </span>
+                                                </span>
+                                                <span className="me-6 inline-block">
+                                                    إجمالى السعر :{" "}
+                                                    <span className="text-primary font-bold">
+                                                        {data?.total_price} جنيه
+                                                    </span>
+                                                </span>
+                                            </h1>
+                                        </div>
+
+                                        {/* {Object.entries(data)?.map(
                                             ([day, value]) => (
                                                 <div key={day} className="mb-14">
                                                     <h1 className="text-lg mb-6">
@@ -239,7 +375,7 @@ const TicketsFilter = () => {
                                                     </div>
                                                 </div>
                                             )
-                                        )}
+                                        )} */}
                                     </>
                                 )}
                             </div>

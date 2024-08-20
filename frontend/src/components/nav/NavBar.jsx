@@ -24,7 +24,7 @@ const Navbar = ({ menuState, setMenuState }) => {
                         className={`${iconStyle} mx-5 lg:mx-7 hover:text-accent`}
                     />
                 </Link>
-                <Link to={"/barcode/today"}>
+                <Link to={"/tickets/add-ticket"}>
                     <BiQrScan className={`${iconStyle} hover:text-text`} />
                 </Link>
             </div>
