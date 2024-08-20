@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import Employee
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.utils.timezone import datetime
+from django.utils.timezone import datetime, now
 from decimal import Decimal
 
 
@@ -19,7 +19,7 @@ class Ticket(models.Model):
 
 
 class SaleTicket(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=now)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     discount = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     after_discount = models.DecimalField(max_digits=10, decimal_places=2, default=0)

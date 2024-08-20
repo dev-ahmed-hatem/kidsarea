@@ -5,6 +5,7 @@ import Main from "../components/main";
 import { routes } from "./Index";
 import Login from "../components/login/Login";
 import SaleTicketPrint from "../components/tickets/SaleTicketPrint";
+import Report from "../components/tickets/TicketReportPrint";
 
 export const browserRoutes = [
     {
@@ -26,6 +27,11 @@ export const browserRoutes = [
     {
         path: "/sale-ticket-print",
         element: <SaleTicketPrint />,
+        errorElement: <NotFound />,
+    },
+    {
+        path: "/sale-ticket-report",
+        element: <Report />,
         errorElement: <NotFound />,
     },
 ];

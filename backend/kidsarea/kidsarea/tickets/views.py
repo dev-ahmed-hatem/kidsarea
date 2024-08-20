@@ -36,18 +36,18 @@ def get_tickets_within_duration(request):
     if from_date and to_date:
         from_date = datetime.strptime(from_date, "%Y-%m-%d").replace(hour=0, minute=0, second=0, microsecond=0)
         to_date = datetime.strptime(to_date, "%Y-%m-%d").replace(hour=23, minute=59, second=59, microsecond=999999)
-        queryset = Ticket.objects.filter(
+        queryset = SaleTicket.objects.filter(
             Q(date__gte=make_aware(from_date)) &
             Q(date__lte=make_aware(to_date))
         )
 
         response_data = {}
-        serialized_tickets = TicketReadSerializer(queryset, context={"request": request},
+        serialized_tickets = SaleTicketSerializer(queryset, context={"request": request},
                                                   many=True)
         response_data = {"tickets": serialized_tickets.data,
-                         "total_tickets": sum(ticket["amount"] for ticket in serialized_tickets.data),
+                         "total_tickets": sum(len(ticket["items"]) for ticket in serialized_tickets.data),
                          "total_price": sum(
-                             ticket["total_price"] for ticket in serialized_tickets.data),
+                             float(ticket["total_price"]) for ticket in serialized_tickets.data),
                          "from_date": from_date.strftime("%Y/%m/%d"),
                          "to_date": to_date.strftime("%Y/%m/%d"),
                          }

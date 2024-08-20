@@ -5,8 +5,8 @@ import Loading from "../groups/Loading";
 import { useForm, Controller } from "react-hook-form";
 import endpoints from "../../config/config";
 import { fetch_list_data } from "../../config/actions";
-import TicketCard from "./TicketCard";
 import { printReport } from "./utils";
+import { useNavigate } from "react-router-dom";
 
 const TicketsFilterForm = ({ setLoading, setFetchError, setData }) => {
     const [post, setPost] = useState(false);
@@ -151,6 +151,7 @@ const TicketsFilterForm = ({ setLoading, setFetchError, setData }) => {
 };
 
 const TicketsFilter = () => {
+    const navigate = useNavigate();
     //////////////////////////////// list data ////////////////////////////////
     const [loading, setLoading] = useState(false);
     const [fetchError, setFetchError] = useState(null);
@@ -176,9 +177,9 @@ const TicketsFilter = () => {
                         className="w-32 h-10 flex justify-center items-center"
                         size={"xl"}
                         onClick={() => {
-                            printReport(
-                                document.getElementById("table").innerHTML
-                            );
+                            navigate("/sale-ticket-report", {
+                                state: { data: data },
+                            });
                         }}
                     >
                         طباعة
@@ -235,62 +236,64 @@ const TicketsFilter = () => {
                                                 <Table.Body>
                                                     {data?.tickets?.map(
                                                         (ticket) => {
-                                                            return (
-                                                                <Table.Row
-                                                                    key={
-                                                                        ticket.id
-                                                                    }
-                                                                    className="bg-white font-medium text-gray-900"
-                                                                >
-                                                                    <Table.Cell>
-                                                                        {ticket
-                                                                            .game
-                                                                            ?.name ? (
-                                                                            ticket
+                                                            return ticket?.items?.map(
+                                                                (item) => (
+                                                                    <Table.Row
+                                                                        key={
+                                                                            item.id
+                                                                        }
+                                                                        className="bg-white font-medium text-gray-900"
+                                                                    >
+                                                                        <Table.Cell>
+                                                                            {item
                                                                                 .game
-                                                                                ?.name
-                                                                        ) : (
-                                                                            <span className="text-red-600">
-                                                                                غير
-                                                                                مسجل
-                                                                            </span>
-                                                                        )}
-                                                                    </Table.Cell>
-                                                                    <Table.Cell>
-                                                                        {ticket
-                                                                            .game
-                                                                            ?.price ? (
-                                                                            ticket
+                                                                                ?.name ? (
+                                                                                item
+                                                                                    .game
+                                                                                    ?.name
+                                                                            ) : (
+                                                                                <span className="text-red-600">
+                                                                                    غير
+                                                                                    مسجل
+                                                                                </span>
+                                                                            )}
+                                                                        </Table.Cell>
+                                                                        <Table.Cell>
+                                                                            {item
                                                                                 .game
-                                                                                ?.price
-                                                                        ) : (
-                                                                            <span className="text-red-600">
-                                                                                غير
-                                                                                مسجل
-                                                                            </span>
-                                                                        )}
-                                                                    </Table.Cell>
-                                                                    <Table.Cell>
-                                                                        {ticket.amount ? (
-                                                                            ticket.amount
-                                                                        ) : (
-                                                                            <span className="text-red-600">
-                                                                                غير
-                                                                                مسجل
-                                                                            </span>
-                                                                        )}
-                                                                    </Table.Cell>
-                                                                    <Table.Cell>
-                                                                        {ticket.total_price ? (
-                                                                            ticket.total_price
-                                                                        ) : (
-                                                                            <span className="text-red-600">
-                                                                                غير
-                                                                                مسجل
-                                                                            </span>
-                                                                        )}
-                                                                    </Table.Cell>
-                                                                </Table.Row>
+                                                                                ?.price ? (
+                                                                                item
+                                                                                    .game
+                                                                                    ?.price
+                                                                            ) : (
+                                                                                <span className="text-red-600">
+                                                                                    غير
+                                                                                    مسجل
+                                                                                </span>
+                                                                            )}
+                                                                        </Table.Cell>
+                                                                        <Table.Cell>
+                                                                            {item.amount ? (
+                                                                                item.amount
+                                                                            ) : (
+                                                                                <span className="text-red-600">
+                                                                                    غير
+                                                                                    مسجل
+                                                                                </span>
+                                                                            )}
+                                                                        </Table.Cell>
+                                                                        <Table.Cell>
+                                                                            {item.total_price ? (
+                                                                                item.total_price
+                                                                            ) : (
+                                                                                <span className="text-red-600">
+                                                                                    غير
+                                                                                    مسجل
+                                                                                </span>
+                                                                            )}
+                                                                        </Table.Cell>
+                                                                    </Table.Row>
+                                                                )
                                                             );
                                                         }
                                                     )}
