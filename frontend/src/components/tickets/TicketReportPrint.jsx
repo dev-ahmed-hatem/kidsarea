@@ -12,7 +12,7 @@ const Report = () => {
     }, []);
 
     return (
-        <div className="w-[26mm] text-xs py=[10mm] px-0 my-0 mx-auto text-center">
+        <div className="w-[26mm] text-xs py=[10mm] px-0 my-0 text-center">
             {/* Logo */}
             <img
                 src="./logo.jpeg"
