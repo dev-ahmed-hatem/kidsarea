@@ -24,7 +24,7 @@ const SaleTicketPrint = ({}) => {
                 className="w-16 inline-block rounded-full"
             />
             <p className="text-center my-2">تذكرة ألعاب</p>
-            <p className="text-center mt-1">{sale_ticket.from_date}</p>
+            <p className="text-center mt-1">{sale_ticket.date}</p>
 
             <table className="text-center text-[6px] font-ligh my-5 w-full">
                 <thead>
