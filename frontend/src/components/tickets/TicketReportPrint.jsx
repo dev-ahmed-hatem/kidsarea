@@ -12,7 +12,7 @@ const Report = () => {
     }, []);
 
     return (
-        <div className="w-[22mm] text-[8px] py=[10mm] px-0 mx-auto my-0 text-center">
+        <div className="w-[24mm] text-[8px] py=[10mm] px-0 mx-auto my-0 text-center">
             {/* Logo */}
             <img
                 src="./logo.jpeg"
@@ -27,13 +27,13 @@ const Report = () => {
             <table className="text-center text-[6px] font-ligh my-5 w-full">
                 <thead>
                     <tr>
-                        <th className="h-8 text-center border border-black">
+                        <th className="h-8 text-center border-[0.5px] border-black">
                             اللعبة
                         </th>
-                        <th className="h-8 text-center border border-black">
+                        <th className="h-8 text-center border-[0.5px] border-black">
                             السعر
                         </th>
-                        <th className="h-8 text-center border border-black">
+                        <th className="h-8 text-center border-[0.5px] border-black">
                             إجمالى
                         </th>
                     </tr>
@@ -43,74 +43,33 @@ const Report = () => {
                     {data.tickets.map((ticket) => {
                         return ticket.items.map((item, index) => (
                             <tr key={index}>
-                                <td className="h-8 text-center border border-black">
+                                <td className="h-8 text-center border-[0.5px] border-black">
                                     {item.game.name}
                                 </td>
-                                <td className="h-8 text-center border border-black">
+                                <td className="h-8 text-center border-[0.5px] border-black">
                                     {Number.parseInt(item.game.price)}
                                 </td>
-                                <td className="h-8 text-center border border-black">
+                                <td className="h-8 text-center border-[0.5px] border-black">
                                     {item.total_price}
                                 </td>
                             </tr>
                         ));
                     })}
                     <tr>
-                        <td className="h-8 text-center border border-black">إجمالى</td>
-                        <td className="h-8 text-center border border-black" colSpan={2}>{data.total_price} جنيه</td>
+                        <td className="h-8 text-center border border-black">
+                            إجمالى
+                        </td>
+                        <td
+                            className="h-8 text-center border border-black"
+                            colSpan={2}
+                        >
+                            {data.total_price} جنيه
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     );
-};
-
-// Styles
-const styles = {
-    container: {
-        width: "48mm",
-        margin: "0 auto",
-        padding: "10mm 0",
-        textAlign: "center",
-        fontFamily: "Arial, sans-serif",
-        border: "1px solid #000",
-        boxSizing: "border-box",
-        fontSize: "14px",
-    },
-    logo: {
-        maxWidth: "100%",
-        marginBottom: "10mm",
-    },
-    table: {
-        width: "100%",
-        margin: "0 auto",
-        textAlign: "center",
-        marginBottom: "10mm",
-    },
-    tableHeaderRow: {
-        borderBottom: "1px solid #000",
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "5px 0",
-    },
-    tableRow: {
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "5px 0",
-    },
-    tableCell: {
-        flex: 1,
-        textAlign: "center",
-        border: "1px solid",
-        heigh: "100%",
-        display: "inline-block",
-    },
-    total: {
-        borderTop: "1px solid #000",
-        paddingTop: "10mm",
-        fontSize: "15px",
-        fontWeight: "bold",
-    },
 };
 
 export default Report;
