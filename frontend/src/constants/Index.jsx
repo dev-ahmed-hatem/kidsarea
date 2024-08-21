@@ -96,15 +96,15 @@ export const routes = [
         url: "/tickets",
         icon: <FaMoneyBill />,
         children: [
-            {
-                id: 1,
-                title: "إضافة تذكرة",
-                name: "add-ticket",
-                url: "/tickets/add-ticket",
-                icon: <FaTicketAlt />,
-                permissions: ["tickets.ticket"],
-                element: <Ticket />,
-            },
+            // {
+            //     id: 1,
+            //     title: "إضافة تذكرة",
+            //     name: "add-ticket",
+            //     url: "/tickets/add-ticket",
+            //     icon: <FaTicketAlt />,
+            //     permissions: ["tickets.ticket"],
+            //     element: <Ticket />,
+            // },
             {
                 id: 2,
                 title: "بيع تذكرة",

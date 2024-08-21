@@ -9,9 +9,9 @@ const SaleTicketPrint = ({}) => {
     useEffect(() => {
         setTimeout(() => {
             window.print();
-            // setTimeout(() => {
-            //     navigate("/tickets/sale-ticket");
-            // }, 500);
+            setTimeout(() => {
+                navigate("/tickets/sale-ticket");
+            }, 500);
         }, 2000);
     }, []);
 

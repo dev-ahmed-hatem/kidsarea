@@ -1,13 +1,17 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const Report = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { data } = location.state || {};
 
     useEffect(() => {
         setTimeout(() => {
             window.print();
+            setTimeout(() => {
+                navigate("/tickets/within-duration");
+            }, 500);
         }, 2000);
     }, []);
 
