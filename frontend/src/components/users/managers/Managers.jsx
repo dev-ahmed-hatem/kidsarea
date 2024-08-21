@@ -24,6 +24,13 @@ const Managers = () => {
 
     // get current user to give the permission to edit its account
     const current_user = JSON.parse(localStorage.getItem("auth_user"));
+    if (current_user && !current_user.is_superuser) {
+        return (
+            <p className="text-lg text-center text-red-600 py-4">
+                ليس لديك صلاحيات هنا
+            </p>
+        );
+    }
 
     const handleDrawer = (drawerFunction, item) => {
         if (drawerFunction == "edit") {

@@ -12,6 +12,14 @@ import ConfirmDelete from "../../groups/ConfirmDelete";
 import { useDrawer } from "../../../providers/DrawerProvider";
 
 const Games = () => {
+    const current_user = JSON.parse(localStorage.getItem("auth_user"));
+    if (current_user && !current_user.is_superuser) {
+        return (
+            <p className="text-lg text-center text-red-600 py-4">
+                ليس لديك صلاحيات هنا
+            </p>
+        );
+    }
     //////////////////////////////// providers ////////////////////////////////
     const { showDrawer, closeDrawer } = useDrawer();
 

@@ -3,6 +3,7 @@ import { routes } from "../../constants/Index";
 import { Link } from "react-router-dom";
 
 const System = () => {
+
     return (
         <div className={`wrapper p-4`}>
             <h1 className="font-bold text-2xl text-gray-600 mb-6">النظام:</h1>

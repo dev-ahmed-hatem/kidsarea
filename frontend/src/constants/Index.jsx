@@ -7,7 +7,6 @@ import {
 } from "react-icons/fa";
 import Managers from "../components/users/managers/Managers";
 import { BiSolidCategory } from "react-icons/bi";
-import Ticket from "../components/tickets/Ticket";
 import TicketsFilter from "../components/tickets/TicketsFilter";
 import Games from "../components/settings/games/Games";
 import { SlCalender } from "react-icons/sl";
@@ -30,47 +29,6 @@ export const routes = [
                 element: <Managers />,
                 permissions: "unadjustable",
             },
-            // {
-            //     id: 2,
-            //     title: "الموظفين",
-            //     name: "staff",
-            //     url: "/users/employees",
-            //     icon: <MdPerson />,
-            //     element: (
-            //         <PermissionProvider
-            //             key={"employees"}
-            //             permissions_list={["users.employee"]}
-            //         >
-            //             <Employees />
-            //         </PermissionProvider>
-            //     ),
-            // },
-            // {
-            //     id: 3,
-            //     title: "المشرفين",
-            //     name: "moderators",
-            //     url: "/users/moderators",
-            //     icon: <MdSupervisorAccount />,
-            //     element: (
-            //         <PermissionProvider
-            //             key={"moderators"}
-            //             permissions_list={["users.moderator"]}
-            //         >
-            //             <Moderators />
-            //         </PermissionProvider>
-            //     ),
-            // },
-            // {
-            //     id: 4,
-            //     title: "الصلاحيات",
-            //     name: "permissions",
-            //     url: "/users/permissions",
-            //     icon: <MdSecurity />,
-            //     element: <Permissions />,
-            //     permissions: [
-            //         { id: 1, value: "تعديل الصلاحيات", name: "permissions" },
-            //     ],
-            // },
         ],
     },
     {
@@ -96,17 +54,8 @@ export const routes = [
         url: "/tickets",
         icon: <FaMoneyBill />,
         children: [
-            // {
-            //     id: 1,
-            //     title: "إضافة تذكرة",
-            //     name: "add-ticket",
-            //     url: "/tickets/add-ticket",
-            //     icon: <FaTicketAlt />,
-            //     permissions: ["tickets.ticket"],
-            //     element: <Ticket />,
-            // },
             {
-                id: 2,
+                id: 1,
                 title: "بيع تذكرة",
                 name: "sale-ticket",
                 url: "/tickets/sale-ticket",
@@ -115,7 +64,7 @@ export const routes = [
                 element: <TicketSale />,
             },
             {
-                id: 3,
+                id: 2,
                 title: "التذاكر خلال فترة",
                 name: "salaries",
                 url: "/tickets/within-duration",

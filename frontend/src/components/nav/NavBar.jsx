@@ -1,6 +1,5 @@
 import React from "react";
 import { FaHome, FaTicketAlt } from "react-icons/fa";
-import { BiQrScan } from "react-icons/bi";
 import "./nav.css";
 import MenuBtn from "./Menubtn";
 import UserIcon from "./UserIcon";
