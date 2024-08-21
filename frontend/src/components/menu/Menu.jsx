@@ -31,8 +31,8 @@ const Menu = forwardRef(({ menuOpen, setMenuState }, menuRef) => {
                 }}
             >
                 <img
-                    className="m-auto w-16 h-16"
-                    src="/vite.svg"
+                    className="m-auto w-40 rounded-lg"
+                    src="/logo.jpeg"
                     alt="GYM Logo"
                 />
             </Link>
