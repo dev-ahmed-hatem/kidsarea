@@ -13,6 +13,12 @@ import { useDrawer } from "../../../providers/DrawerProvider";
 
 const Games = () => {
     const current_user = JSON.parse(localStorage.getItem("auth_user"));
+    console.log(current_user);
+    console.log(current_user.is_superuser);
+    console.log(current_user && !current_user.is_superuser);
+    
+    
+    
     if (current_user && !current_user.is_superuser) {
         return (
             <p className="text-lg text-center text-red-600 py-4">
