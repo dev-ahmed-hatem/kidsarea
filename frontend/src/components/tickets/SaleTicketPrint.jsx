@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import "./styles/print.css";
 
 const SaleTicketPrint = ({}) => {
     const location = useLocation();
@@ -16,7 +17,7 @@ const SaleTicketPrint = ({}) => {
     }, []);
 
     return (
-        <div className="w-[24mm] text-[8px] py=[10mm] px-0 mx-auto my-0 text-center">
+        <div className="w-[48mm] text-[14px] py=[10mm] px-0 mx-auto my-0 text-center">
             {/* Logo */}
             <img
                 src="./logo.jpeg"
@@ -26,7 +27,7 @@ const SaleTicketPrint = ({}) => {
             <p className="text-center my-2">تذكرة ألعاب</p>
             <p className="text-center mt-1">{sale_ticket.date}</p>
 
-            <table className="text-center text-[6px] font-ligh my-5 w-full">
+            <table className="text-center text-[9px] font-ligh my-5 w-full">
                 <thead>
                     <tr>
                         <th className="h-8 text-center border-[0.5px] border-black">

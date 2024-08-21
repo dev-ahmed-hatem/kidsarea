@@ -1,12 +1,12 @@
 @media print {
     @page {
-        size: 40mm auto; /* Set the width to 40mm, and height to auto */
-        margin: 0; /* Set margin to 0 or adjust as needed */
+        size: 58mm auto; 
+        margin: 0;     
     }
 
     body {
-        width: 40mm; /* Set body width to 40mm */
-        margin: 0; /* Remove default margins */
-        overflow: hidden; /* Hide overflow to fit content */
+        width: 58mm;
+        margin: 0; 
+        overflow: hidden; 
     }
 }

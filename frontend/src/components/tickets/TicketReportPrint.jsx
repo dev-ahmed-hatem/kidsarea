@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import "./styles/print.css";
 
 const Report = () => {
     const location = useLocation();
@@ -16,7 +17,7 @@ const Report = () => {
     }, []);
 
     return (
-        <div className="w-[24mm] text-[8px] py=[10mm] px-0 mx-auto my-0 text-center">
+        <div className="w-[48mm] text-[14px] py=[10mm] px-0 mx-auto my-0 text-center">
             {/* Logo */}
             <img
                 src="./logo.jpeg"
@@ -28,7 +29,7 @@ const Report = () => {
             <p className="text-center mb-1">إلى : {data.to_date}</p>
 
             {/* Table Headers */}
-            <table className="text-center text-[6px] font-ligh my-5 w-full">
+            <table className="text-center text-[9px] font-ligh my-5 w-full">
                 <thead>
                     <tr>
                         <th className="h-8 text-center border-[0.5px] border-black">
