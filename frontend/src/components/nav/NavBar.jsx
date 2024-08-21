@@ -1,5 +1,5 @@
 import React from "react";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaTicketAlt } from "react-icons/fa";
 import { BiQrScan } from "react-icons/bi";
 import "./nav.css";
 import MenuBtn from "./Menubtn";
@@ -24,8 +24,8 @@ const Navbar = ({ menuState, setMenuState }) => {
                         className={`${iconStyle} mx-5 lg:mx-7 hover:text-accent`}
                     />
                 </Link>
-                <Link to={"/tickets/add-ticket"}>
-                    <BiQrScan className={`${iconStyle} hover:text-text`} />
+                <Link to={"/tickets/sale-ticket"}>
+                    <FaTicketAlt className={`${iconStyle} hover:text-text`} />
                 </Link>
             </div>
 
