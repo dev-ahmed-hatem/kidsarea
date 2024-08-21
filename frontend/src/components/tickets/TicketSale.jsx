@@ -575,15 +575,17 @@ const TicketSale = () => {
                                                                     );
                                                                 }}
                                                             />
-                                                            <MdEdit
-                                                                className="text-accent-700 cursor-pointer"
-                                                                onClick={() => {
-                                                                    handleDrawer(
-                                                                        "edit",
-                                                                        ticket
-                                                                    );
-                                                                }}
-                                                            />
+                                                            {current_user?.is_superuser && (
+                                                                <MdEdit
+                                                                    className="text-accent-700 cursor-pointer"
+                                                                    onClick={() => {
+                                                                        handleDrawer(
+                                                                            "edit",
+                                                                            ticket
+                                                                        );
+                                                                    }}
+                                                                />
+                                                            )}
                                                         </span>
                                                     </Table.Cell>
                                                 </Table.Row>

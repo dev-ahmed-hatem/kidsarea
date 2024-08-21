@@ -149,7 +149,7 @@ const Login = () => {
                     className="logo w-full md:w-1/2 h-[30%] md:h-full flex justify-center items-center bg-gradient-to-l
                  from-primary-400 to-primary-200 "
                 >
-                    <img className="w-32 h-full" src="vite.svg" alt="" />
+                    <img className="lg:w-full h-full" src="./logo.jpeg" alt="" />
                 </div>
             </div>
         </div>
