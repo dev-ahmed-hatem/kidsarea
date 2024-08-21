@@ -39,7 +39,7 @@ const DrawerProvider = ({ children }) => {
                     open={drawerState.open}
                     onClose={closeDrawer}
                     position="top"
-                    className="max-h-[80vh]"
+                    className="min-h-[80vh]"
                 >
                     <Drawer.Header
                         title={drawerState.title}

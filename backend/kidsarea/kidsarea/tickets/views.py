@@ -59,6 +59,17 @@ class SaleTicketViewSet(ModelViewSet):
     queryset = SaleTicket.objects.all()
     serializer_class = SaleTicketSerializer
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.query_params.get('search', None)
+        date = self.request.query_params.get('date', None)
+
+        if search:
+            queryset = queryset.filter(id__icontains=search)
+        if date:
+            queryset = queryset.filter(date=datetime.strptime(date, '%Y-%m-%d'))
+        return queryset
+
 
 class SaleItemViewSet(ModelViewSet):
     queryset = SaleTicketItem.objects.all()

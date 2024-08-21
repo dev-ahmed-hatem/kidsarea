@@ -9,7 +9,6 @@ import endpoints from "../../config/config";
 import ConfirmDelete from "../groups/ConfirmDelete";
 import { useDrawer } from "../../providers/DrawerProvider";
 import { FaPrint, FaMoneyBill, FaPercent } from "react-icons/fa";
-import { printTicket } from "./utils";
 import { useForm } from "react-hook-form";
 import { FcInvite } from "react-icons/fc";
 import { defaultFormSubmission, fetch_list_data } from "../../config/actions";
@@ -19,6 +18,13 @@ import { useNavigate } from "react-router-dom";
 
 const TicketForm = ({ postURL, defaultValues, callBack }) => {
     const navigate = useNavigate();
+
+    // edit date modification
+    const [date, setDate] = useState(
+        defaultValues
+            ? new Date(defaultValues?.date).toLocaleDateString("en-CA")
+            : null
+    );
 
     const [isLoading, setIsLoading] = useState(true);
     const [fetchError, setFetchError] = useState(null);
@@ -87,16 +93,21 @@ const TicketForm = ({ postURL, defaultValues, callBack }) => {
     };
 
     const onSubmit = () => {
-        const ticketData = {
-            games: selectedGames.map((game) => ({
-                game_id: game.id,
-                amount: game.amount,
-                total_price: game.price * game.amount,
-            })),
-            total_price: discountedPrice,
-            discount: discountPercent,
-            after_discount: discountedPrice,
-        };
+        const ticketData =
+            formFunction == "add"
+                ? {
+                      games: selectedGames.map((game) => ({
+                          game_id: game.id,
+                          amount: game.amount,
+                          total_price: game.price * game.amount,
+                      })),
+                      total_price: discountedPrice,
+                      discount: discountPercent,
+                      after_discount: discountedPrice,
+                  }
+                : {
+                      date: date,
+                  };
 
         defaultFormSubmission({
             url: postURL,
@@ -108,9 +119,11 @@ const TicketForm = ({ postURL, defaultValues, callBack }) => {
             reset: reset,
             callBack: callBack,
             onSuccess: (response) => {
-                navigate("/sale-ticket-print", {
-                    state: { sale_ticket: response.data },
-                });
+                if (formFunction == "add") {
+                    navigate("/sale-ticket-print", {
+                        state: { sale_ticket: response.data },
+                    });
+                }
             },
             setError: setError,
         });
@@ -134,7 +147,9 @@ const TicketForm = ({ postURL, defaultValues, callBack }) => {
             className={`wrapper p-4 my-8 bg-white rounded border-t-4 border-primary shadow-lg`}
         >
             <h1 className="font-bold text-text text-lg">
-                {formFunction == "add" ? "بيع تذكرة" : "تعديل تذكرة مباعة"}
+                {formFunction == "add"
+                    ? "بيع تذكرة"
+                    : "تعديل تاريخ تذكرة مباعة"}
             </h1>
             <hr className="h-px my-3 bg-gray-200 border-0"></hr>
             <form
@@ -149,175 +164,220 @@ const TicketForm = ({ postURL, defaultValues, callBack }) => {
                     </p>
                 ) : (
                     <>
-                        <div className="w-full lg:w-3/4">
-                            <div className="table-wrapper overflow-x-auto w-full">
-                                <Table className="min-w-[400px]">
-                                    <Table.Head className="text-right">
-                                        <Table.HeadCell>اختر</Table.HeadCell>
-                                        <Table.HeadCell>
-                                            اسم اللعبة
-                                        </Table.HeadCell>
-                                        <Table.HeadCell>السعر</Table.HeadCell>
-                                        <Table.HeadCell>الكمية</Table.HeadCell>
-                                    </Table.Head>
-                                    <Table.Body>
-                                        {games.map((game) => (
-                                            <Table.Row
-                                                key={game.id}
-                                                className="mb-8 text-right"
-                                            >
-                                                <Table.Cell>
-                                                    <input
-                                                        type="checkbox"
-                                                        id={`game_${game.id}`}
-                                                        onChange={() =>
-                                                            handleCheckboxChange(
-                                                                game
-                                                            )
-                                                        }
-                                                        checked={
-                                                            !!selectedGames.find(
-                                                                (g) =>
-                                                                    g.id ===
-                                                                    game.id
-                                                            )
-                                                        }
-                                                    />
-                                                </Table.Cell>
-                                                <Table.Cell>
-                                                    <label
-                                                        htmlFor={`game_${game.id}`}
-                                                        className="mx-4"
-                                                    >
-                                                        {game.name}
-                                                    </label>
-                                                </Table.Cell>
-                                                <Table.Cell className="min-w-[230px]">
+                        {formFunction == "add" ? (
+                            <div className="w-full lg:w-3/4">
+                                <div className="table-wrapper overflow-x-auto w-full">
+                                    <Table className="min-w-[400px]">
+                                        <Table.Head className="text-right">
+                                            <Table.HeadCell>
+                                                اختر
+                                            </Table.HeadCell>
+                                            <Table.HeadCell>
+                                                اسم اللعبة
+                                            </Table.HeadCell>
+                                            <Table.HeadCell>
+                                                السعر
+                                            </Table.HeadCell>
+                                            <Table.HeadCell>
+                                                الكمية
+                                            </Table.HeadCell>
+                                        </Table.Head>
+                                        <Table.Body>
+                                            {games.map((game) => (
+                                                <Table.Row
+                                                    key={game.id}
+                                                    className="mb-8 text-right"
+                                                >
+                                                    <Table.Cell>
+                                                        <input
+                                                            type="checkbox"
+                                                            id={`game_${game.id}`}
+                                                            onChange={() =>
+                                                                handleCheckboxChange(
+                                                                    game
+                                                                )
+                                                            }
+                                                            checked={
+                                                                !!selectedGames.find(
+                                                                    (g) =>
+                                                                        g.id ===
+                                                                        game.id
+                                                                )
+                                                            }
+                                                        />
+                                                    </Table.Cell>
+                                                    <Table.Cell>
+                                                        <label
+                                                            htmlFor={`game_${game.id}`}
+                                                            className="mx-4"
+                                                        >
+                                                            {game.name}
+                                                        </label>
+                                                    </Table.Cell>
+                                                    <Table.Cell className="min-w-[230px]">
+                                                        <TextInput
+                                                            id="price"
+                                                            type="number"
+                                                            className="inline-block me-4"
+                                                            rightIcon={
+                                                                FaMoneyBill
+                                                            }
+                                                            placeholder="السعر"
+                                                            color={"primary"}
+                                                            value={game.price}
+                                                            disabled
+                                                        />
+                                                    </Table.Cell>
+                                                    <Table.Cell className="min-w-[230px]">
+                                                        <TextInput
+                                                            id="amount"
+                                                            type="number"
+                                                            className="inline-block"
+                                                            rightIcon={FcInvite}
+                                                            placeholder="العدد"
+                                                            color={
+                                                                errors.amount
+                                                                    ? "failure"
+                                                                    : "primary"
+                                                            }
+                                                            value={
+                                                                selectedGames.find(
+                                                                    (g) =>
+                                                                        g.id ===
+                                                                        game.id
+                                                                )
+                                                                    ? selectedGames.find(
+                                                                          (g) =>
+                                                                              g.id ===
+                                                                              game.id
+                                                                      ).amount
+                                                                    : 0
+                                                            }
+                                                            onChange={(e) =>
+                                                                handleGameChange(
+                                                                    game,
+                                                                    parseInt(
+                                                                        e.target
+                                                                            .value
+                                                                    )
+                                                                )
+                                                            }
+                                                            onBlur={() =>
+                                                                trigger(
+                                                                    "amount"
+                                                                )
+                                                            }
+                                                            disabled={
+                                                                !selectedGames.find(
+                                                                    (g) =>
+                                                                        g.id ===
+                                                                        game.id
+                                                                )
+                                                            }
+                                                        />
+                                                    </Table.Cell>
+                                                </Table.Row>
+                                            ))}
+                                        </Table.Body>
+                                    </Table>
+                                </div>
+                                <div className="totals text-base">
+                                    <div className="my-6">
+                                        <label>
+                                            الإجمالى : {totalPrice.toFixed(2)}{" "}
+                                            جنيه
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                className="me-4"
+                                                checked={discount}
+                                                onChange={() =>
+                                                    setDiscount(!discount)
+                                                }
+                                            />
+                                            الخصم
+                                        </label>
+                                    </div>
+                                    {discount && (
+                                        <>
+                                            <div className="mb-6">
+                                                <label>
+                                                    نسبة الخصم :
                                                     <TextInput
-                                                        id="price"
+                                                        id="discount"
                                                         type="number"
-                                                        className="inline-block me-4"
-                                                        rightIcon={FaMoneyBill}
-                                                        placeholder="السعر"
+                                                        className="inline-block mx-3"
+                                                        rightIcon={FaPercent}
+                                                        placeholder="الخصم"
                                                         color={"primary"}
-                                                        value={game.price}
-                                                        disabled
-                                                    />
-                                                </Table.Cell>
-                                                <Table.Cell className="min-w-[230px]">
-                                                    <TextInput
-                                                        id="amount"
-                                                        type="number"
-                                                        className="inline-block"
-                                                        rightIcon={FcInvite}
-                                                        placeholder="العدد"
-                                                        color={
-                                                            errors.amount
-                                                                ? "failure"
-                                                                : "primary"
-                                                        }
-                                                        value={
-                                                            selectedGames.find(
-                                                                (g) =>
-                                                                    g.id ===
-                                                                    game.id
-                                                            )
-                                                                ? selectedGames.find(
-                                                                      (g) =>
-                                                                          g.id ===
-                                                                          game.id
-                                                                  ).amount
-                                                                : 0
-                                                        }
+                                                        value={discountPercent}
                                                         onChange={(e) =>
-                                                            handleGameChange(
-                                                                game,
-                                                                parseInt(
+                                                            setDiscountPercent(
+                                                                parseFloat(
                                                                     e.target
                                                                         .value
-                                                                )
+                                                                ) || 0
                                                             )
                                                         }
-                                                        onBlur={() =>
-                                                            trigger("amount")
-                                                        }
-                                                        disabled={
-                                                            !selectedGames.find(
-                                                                (g) =>
-                                                                    g.id ===
-                                                                    game.id
-                                                            )
-                                                        }
+                                                        min={0}
+                                                        max={100}
                                                     />
-                                                </Table.Cell>
-                                            </Table.Row>
-                                        ))}
-                                    </Table.Body>
-                                </Table>
-                            </div>
-                            <div className="totals text-base">
-                                <div className="my-6">
-                                    <label>
-                                        الإجمالى : {totalPrice.toFixed(2)} جنيه
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            className="me-4"
-                                            checked={discount}
-                                            onChange={() =>
-                                                setDiscount(!discount)
-                                            }
-                                        />
-                                        الخصم
-                                    </label>
-                                </div>
-                                {discount && (
-                                    <>
-                                        <div className="mb-6">
-                                            <label>
-                                                نسبة الخصم :
-                                                <TextInput
-                                                    id="discount"
-                                                    type="number"
-                                                    className="inline-block mx-3"
-                                                    rightIcon={FaPercent}
-                                                    placeholder="الخصم"
-                                                    color={"primary"}
-                                                    value={discountPercent}
-                                                    onChange={(e) =>
-                                                        setDiscountPercent(
-                                                            parseFloat(
-                                                                e.target.value
-                                                            ) || 0
-                                                        )
-                                                    }
-                                                    min={0}
-                                                    max={100}
-                                                />
-                                            </label>
-                                        </div>
+                                                </label>
+                                            </div>
 
-                                        <div>
-                                            <label>
-                                                الصافى :{" "}
-                                                {discountedPrice.toFixed(2)}{" "}
-                                                جنيه
-                                            </label>
-                                        </div>
-                                    </>
-                                )}
+                                            <div>
+                                                <label>
+                                                    الصافى :{" "}
+                                                    {discountedPrice.toFixed(2)}{" "}
+                                                    جنيه
+                                                </label>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        ) : (
+                            <div className="w-full lg:max-w-md lg:w-[30%]">
+                                <div className="mb-2 block">
+                                    <Label
+                                        htmlFor="start_date"
+                                        value="تاريخ بدأ الاشتراك :"
+                                    />
+                                </div>
+                                <Datepicker
+                                    id="start_date"
+                                    language="ar"
+                                    labelClearButton="مسح"
+                                    labelTodayButton="اليوم"
+                                    placeholder="تاريخ بدأ الاشتراك"
+                                    color={"primary"}
+                                    onSelectedDateChanged={(date) => {
+                                        setDate(
+                                            date.toLocaleDateString("en-CA")
+                                        );
+                                    }}
+                                    defaultDate={
+                                        defaultValues?.date
+                                            ? new Date(defaultValues?.date)
+                                            : new Date()
+                                    }
+                                />
+                            </div>
+                        )}
                         <div className="flex flex-wrap max-h-12 min-w-full justify-center">
                             <Button
                                 type="submit"
                                 color={
                                     formFunction == "add" ? "primary" : "accent"
                                 }
-                                disabled={post || selectedGames.length == 0}
+                                disabled={
+                                    formFunction == "edit"
+                                        ? false
+                                        : post || selectedGames.length == 0
+                                }
                                 className="w-32 h-10 flex justify-center items-center"
                                 size={"xl"}
                                 isProcessing={post}
@@ -325,7 +385,7 @@ const TicketForm = ({ postURL, defaultValues, callBack }) => {
                                     <AiOutlineLoading className="h-6 w-6 animate-spin" />
                                 }
                             >
-                                طباعة
+                                {formFunction == "edit" ? "تعديل" : "طباعة"}
                             </Button>
                         </div>
                     </>
@@ -337,6 +397,8 @@ const TicketForm = ({ postURL, defaultValues, callBack }) => {
 
 const TicketSale = () => {
     const navigate = useNavigate();
+    const current_user = JSON.parse(localStorage.getItem("auth_user"));
+
     //////////////////////////////// providers ////////////////////////////////
     const { showDrawer, closeDrawer } = useDrawer();
 
@@ -513,15 +575,15 @@ const TicketSale = () => {
                                                                     );
                                                                 }}
                                                             />
-                                                            {/* <MdDelete
-                                                                className="text-secondary cursor-pointer"
+                                                            <MdEdit
+                                                                className="text-accent-700 cursor-pointer"
                                                                 onClick={() => {
                                                                     handleDrawer(
-                                                                        "delete",
+                                                                        "edit",
                                                                         ticket
                                                                     );
                                                                 }}
-                                                            /> */}
+                                                            />
                                                         </span>
                                                     </Table.Cell>
                                                 </Table.Row>
